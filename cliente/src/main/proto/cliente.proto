@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.adjt.cliente";
+option java_outer_classname = "ClienteProto";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+// Definição do Endereço
+message Endereco {
+  int64 id = 1;
+  string rua = 2;
+  string bairro = 3;
+  string cep = 4;
+  string complemento = 5;
+  string numero = 6;
+  string cidade = 7;
+  string uf = 8;
+  bool principal = 9;
+  string observacao = 10;
+}
+
+// Definição do Cliente
+message Cliente {
+  int64 id = 1;
+  string nome = 2;
+  string cpf = 3;
+  string email = 4;
+  string senha = 5;
+  google.protobuf.Timestamp dt_cadastro = 6;
+  repeated Endereco enderecos = 7; // Representa a lista de endereços (1:N)
+}
+
+// Mensagens de Requisição e Resposta
+message ClienteIdRequest {
+  int64 id = 1;
+}
+
+message ClienteListResponse {
+  repeated Cliente clientes = 1;
+}
+
+// Serviço gRPC
+service ClienteService {
+  // Buscar cliente por ID
+  rpc BuscarPorId (ClienteIdRequest) returns (Cliente);
+}
