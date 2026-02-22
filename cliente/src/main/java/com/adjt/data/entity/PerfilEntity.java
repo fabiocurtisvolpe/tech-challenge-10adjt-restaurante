@@ -13,6 +13,6 @@ public class PerfilEntity extends PanacheEntityBase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @Column(name = "nome",  nullable = false, length = 20)
+    @Column(name = "nome", nullable = false, length = 20, unique = true)
     public String nome;
 }

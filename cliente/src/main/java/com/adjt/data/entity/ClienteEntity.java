@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "tb_cliente")
+@Table(name = "tb_cliente", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_cliente_cpf_email", columnNames = {"cpf", "email"})
+})
 @Audited
 public class ClienteEntity extends PanacheEntityBase {
 
@@ -39,30 +41,22 @@ public class ClienteEntity extends PanacheEntityBase {
 
     @NotBlank
     @Size(max = 255)
-    @Column(length = 255, nullable = false)
+    @Column(nullable = false)
     public String senha;
 
-    @CreationTimestamp // Preenche automaticamente a data de cadastro
-    @Column(name = "dt_cadastro", updatable = false)
+    @CreationTimestamp
+    @Column(name = "dt_cadastro", updatable = false, columnDefinition = "TIMESTAMP(6)")
     public LocalDateTime dtCadastro;
 
-    // Relacionamento 1:N com Endereços
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     public List<EnderecoEntity> enderecos = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "id_perfil")
+    @ManyToOne
+    @JoinColumn(name = "id_perfil", foreignKey = @ForeignKey(name = "fk_cliente_perfil"))
     public PerfilEntity perfil;
 
     public void addEndereco(EnderecoEntity endereco) {
         endereco.cliente = this;
         this.enderecos.add(endereco);
-    }
-
-    @PrePersist
-    protected void onCreate() {
-        if (this.dtCadastro == null) {
-            this.dtCadastro = LocalDateTime.now();
-        }
     }
 }

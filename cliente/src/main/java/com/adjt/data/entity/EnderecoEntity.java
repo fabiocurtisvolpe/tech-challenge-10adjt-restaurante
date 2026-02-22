@@ -54,8 +54,7 @@ public class EnderecoEntity extends PanacheEntityBase {
     @Column(columnDefinition = "TEXT")
     public String observacao;
 
-    // Relacionamento com Cliente
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_cliente", nullable = false)
+    @JoinColumn(name = "id_cliente", nullable = false, foreignKey = @ForeignKey(name = "fk_endereco_cliente"))
     public ClienteEntity cliente;
 }
