@@ -45,7 +45,10 @@ public class ClienteRepositoryAdapter implements ClientePort<Cliente> {
         ClienteEntity entity = repository.findById(model.getId());
         Objects.requireNonNull(entity, MensagemUtil.NAO_FOI_POSSIVEL_EXECUTAR_OPERACAO);
 
-        mapper.updateEntityFromModel(model, entity);
+        entity.nome = model.getNome();
+        entity.cpf = model.getCpf();
+        entity.email = model.getEmail();
+        entity.senha = model.getSenha();
 
         atualizarEnderecos(entity, model.getEnderecos());
 
@@ -55,7 +58,7 @@ public class ClienteRepositoryAdapter implements ClientePort<Cliente> {
     private void atualizarEnderecos(ClienteEntity clienteEntity, List<Endereco> enderecosModel) {
 
         if (enderecosModel == null) return;
-        
+
         clienteEntity.enderecos.removeIf(existing ->
                 enderecosModel.stream().noneMatch(m -> m.getId() != null && m.getId().equals(existing.id))
         );
@@ -65,7 +68,17 @@ public class ClienteRepositoryAdapter implements ClientePort<Cliente> {
                 clienteEntity.enderecos.stream()
                         .filter(e -> e.id.equals(model.getId()))
                         .findFirst()
-                        .ifPresent(existing -> enderecoMapper.updateEntityFromModel(model, existing));
+                        .ifPresent(existing -> {
+                            existing.rua = model.getRua();
+                            existing.bairro = model.getBairro();
+                            existing.cep = model.getCep();
+                            existing.complemento = model.getComplemento();
+                            existing.numero = model.getNumero();
+                            existing.cidade = model.getCidade();
+                            existing.uf = model.getUf();
+                            existing.principal = model.getPrincipal();
+                            existing.observacao = model.getObservacao();
+                        });
             } else {
                 EnderecoEntity novaEntity = enderecoMapper.toEntity(model);
                 clienteEntity.addEndereco(novaEntity);
@@ -75,8 +88,6 @@ public class ClienteRepositoryAdapter implements ClientePort<Cliente> {
 
     @Override
     public Boolean excluir(Long id) {
-
-
 
         return null;
     }

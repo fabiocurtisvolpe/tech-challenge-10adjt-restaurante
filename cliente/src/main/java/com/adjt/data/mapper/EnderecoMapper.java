@@ -2,19 +2,48 @@ package com.adjt.data.mapper;
 
 import com.adjt.core.model.Endereco;
 import com.adjt.data.entity.EnderecoEntity;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import jakarta.enterprise.context.ApplicationScoped;
 
-@Mapper(componentModel = "cdi")
-public interface EnderecoMapper {
+@ApplicationScoped
+public class EnderecoMapper {
 
-    Endereco toModel(EnderecoEntity entity);
+    public Endereco toModel(EnderecoEntity entity) {
+        if (entity == null) {
+            return null;
+        }
 
-    @Mapping(target = "cliente", ignore = true)
-    EnderecoEntity toEntity(Endereco model);
+        Endereco endereco = new Endereco();
+        endereco.setId(entity.id);
+        endereco.setRua(entity.rua);
+        endereco.setBairro(entity.bairro);
+        endereco.setCep(entity.cep);
+        endereco.setComplemento(entity.complemento);
+        endereco.setNumero(entity.numero);
+        endereco.setCidade(entity.cidade);
+        endereco.setUf(entity.uf);
+        endereco.setPrincipal(entity.principal);
+        endereco.setObservacao(entity.observacao);
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "cliente", ignore = true)
-    void updateEntityFromModel(Endereco model, @MappingTarget EnderecoEntity entity);
+        return endereco;
+    }
+
+    public EnderecoEntity toEntity(Endereco model) {
+        if (model == null) {
+            return null;
+        }
+
+        EnderecoEntity entity = new EnderecoEntity();
+        entity.id = model.getId();
+        entity.rua = model.getRua();
+        entity.bairro = model.getBairro();
+        entity.cep = model.getCep();
+        entity.complemento = model.getComplemento();
+        entity.numero = model.getNumero();
+        entity.cidade = model.getCidade();
+        entity.uf = model.getUf();
+        entity.principal = model.getPrincipal();
+        entity.observacao = model.getObservacao();
+
+        return entity;
+    }
 }

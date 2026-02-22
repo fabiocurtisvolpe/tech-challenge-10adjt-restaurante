@@ -14,5 +14,5 @@ public class PerfilEntity extends PanacheEntityBase {
     public Long id;
 
     @Column(name = "nome",  nullable = false, length = 20)
-    private String nome;
+    public String nome;
 }

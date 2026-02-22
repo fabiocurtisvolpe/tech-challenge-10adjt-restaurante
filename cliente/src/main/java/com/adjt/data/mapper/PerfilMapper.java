@@ -2,14 +2,32 @@ package com.adjt.data.mapper;
 
 import com.adjt.core.model.Perfil;
 import com.adjt.data.entity.PerfilEntity;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import jakarta.enterprise.context.ApplicationScoped;
 
-@Mapper(componentModel = "cdi")
-public interface PerfilMapper {
+@ApplicationScoped
+public class PerfilMapper {
 
-    Perfil toModel(PerfilEntity entity);
+    public Perfil toModel(PerfilEntity entity) {
+        if (entity == null) {
+            return null;
+        }
 
-    @Mapping(target = "id", source = "id")
-    PerfilEntity toEntity(Perfil model);
+        Perfil perfil = new Perfil();
+        perfil.setId(entity.id);
+        perfil.setNome(entity.nome);
+
+        return perfil;
+    }
+
+    public PerfilEntity toEntity(Perfil model) {
+        if (model == null) {
+            return null;
+        }
+
+        PerfilEntity entity = new PerfilEntity();
+        entity.id = model.getId();
+        entity.nome = model.getNome();
+
+        return entity;
+    }
 }
