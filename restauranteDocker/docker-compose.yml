@@ -1,0 +1,130 @@
+services:
+  # --- Banco de Dados Cliente ---
+  postgres_cliente:
+    build: .
+    image: postgres:17
+    container_name: cliente_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secret}
+      POSTGRES_DB: ${POSTGRES_DB:-cliente}
+    ports:
+      - "5434:5432"
+    volumes:
+      - cliente_pg_data:/var/lib/postgresql/data
+    networks:
+      - fase3net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-admin} -d ${POSTGRES_DB:-cliente}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # --- Banco de Dados Entrega ---
+  postgres_entrega:
+    build: .
+    image: postgres:17
+    container_name: entrega_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER_ENTREGA:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_ENTREGA:-secret}
+      POSTGRES_DB: ${POSTGRES_DB_ENTREGA:-entrega}
+    ports:
+      - "5435:5432"
+    volumes:
+      - entrega_pg_data:/var/lib/postgresql/data
+    networks:
+      - fase3net
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER_ENTREGA:-admin} -d ${POSTGRES_DB_ENTREGA:-entrega}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # --- Banco de Dados Pedido ---
+  postgres_pedido:
+    build: .
+    image: postgres:17
+    container_name: pedido_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER_PEDIDO:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_PEDIDO:-secret}
+      POSTGRES_DB: ${POSTGRES_DB_PEDIDO:-pedido}
+    ports:
+      - "5436:5432"
+    volumes:
+      - pedido_pg_data:/var/lib/postgresql/data
+    networks:
+      - fase3net
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER_PEDIDO:-admin} -d ${POSTGRES_DB_PEDIDO:-pedido}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # --- Banco de Dados Restaurante ---
+  postgres_restaurante:
+    build: .
+    image: postgres:17
+    container_name: restaurante_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER_RESTAURANTE:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD_RESTAURANTE:-secret}
+      POSTGRES_DB: ${POSTGRES_DB_RESTAURANTE:-restaurante}
+    ports:
+      - "5437:5432"
+    volumes:
+      - entrega_pg_data:/var/lib/postgresql/data
+    networks:
+      - fase3net
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER_RESTAURANTE:-admin} -d ${POSTGRES_DB_RESTAURANTE:-restaurante}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # --- Rabbitmq ---
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: my_rabbitmq
+    ports:
+      - "5672:5672"   # Porta de comunicação (Java)
+      - "15672:15672" # Porta do Painel de Controle (Browser)
+    networks:
+      - fase3net
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  # --- Aplicação Procpag ---
+  procpag:
+    image: docker.io/erickemprobr/procpag:latest
+    container_name: procpag_app
+    platform: linux/amd64
+    ports:
+      - "8089:8089"
+    networks:
+      - fase3net
+    depends_on:
+      postgres_pedido:
+        condition: service_healthy
+
+# --- Definição de Volumes Persistentes ---
+volumes:
+  cliente_pg_data:
+  entrega_pg_data:
+  pedido_pg_data:
+  restaurante_pg_data:
+
+# --- Definição de Redes ---
+networks:
+  fase3net:
+    driver: bridge
