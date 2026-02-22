@@ -60,10 +60,9 @@ public class ClienteMapper {
         entity.dtCadastro = model.getDtCadastro();
 
         if (model.getEnderecos() != null) {
-            List<EnderecoEntity> enderecos = model.getEnderecos().stream()
+            model.getEnderecos().stream()
                     .map(enderecoMapper::toEntity)
-                    .collect(Collectors.toList());
-            entity.enderecos = enderecos;
+                    .forEach(entity::addEndereco);
         }
 
         if (model.getPerfil() != null) {
