@@ -81,7 +81,7 @@ services:
     ports:
       - "5437:5432"
     volumes:
-      - entrega_pg_data:/var/lib/postgresql/data
+      - restaurante_pg_data:/var/lib/postgresql/data
     networks:
       - fase3net
     healthcheck:
