@@ -104,6 +104,29 @@ services:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
 
+  # --- Banco de Dados Keycloak ---
+  postgres_keycloak:
+    build: .
+    image: postgres:17
+    container_name: keycloak_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: keycloak
+    ports:
+      - "5438:5432"
+    volumes:
+      - keycloak_pg_data:/var/lib/postgresql/data
+    networks:
+      - fase3net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d keycloak"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
   # --- Aplicação Procpag ---
   procpag:
     image: docker.io/erickemprobr/procpag:latest
@@ -117,12 +140,37 @@ services:
       postgres_pedido:
         condition: service_healthy
 
+  # --- Keycloak ---
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres_keycloak:5432/keycloak
+      KC_DB_USERNAME: admin
+      KC_DB_PASSWORD: secret
+    ports:
+      - "8180:8080"
+    command:
+      - start-dev
+      - --import-realm
+    volumes:
+      - ./keycloak-realm.json:/opt/keycloak/data/import/restaurante-realm-realm.json
+    networks:
+      - fase3net
+    depends_on:
+      postgres_keycloak:
+        condition: service_healthy
+
 # --- Definição de Volumes Persistentes ---
 volumes:
   cliente_pg_data:
   entrega_pg_data:
   pedido_pg_data:
   restaurante_pg_data:
+  keycloak_pg_data:
 
 # --- Definição de Redes ---
 networks:

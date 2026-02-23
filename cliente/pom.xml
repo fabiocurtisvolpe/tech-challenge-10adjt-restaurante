@@ -88,14 +88,10 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-oidc</artifactId>
-            <version>3.32.0</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-keycloak-admin-resteasy-client</artifactId>
-            <version>3.32.0</version>
-            <scope>compile</scope>
         </dependency>
 
     </dependencies>

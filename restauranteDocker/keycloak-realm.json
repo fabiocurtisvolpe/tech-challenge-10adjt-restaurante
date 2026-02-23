@@ -1,0 +1,56 @@
+{
+  "realm": "restaurante-realm",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "clients": [
+    {
+      "clientId": "backend-service",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "seu-secret-aqui",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "attributes": {
+        "access.token.lifespan": "300"
+      },
+      "redirectUris": ["*"],
+      "webOrigins": ["*"]
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "ROLE_CLIENTE",
+        "description": "Cliente role"
+      },
+      {
+        "name": "ROLE_ADMIN",
+        "description": "Admin role"
+      }
+    ]
+  },
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["ROLE_ADMIN"]
+    }
+  ]
+}
