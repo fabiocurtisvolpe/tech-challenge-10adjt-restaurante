@@ -1,0 +1,162 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.adjt.restaurante";
+option java_outer_classname = "RestauranteProto";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+service RestauranteService {
+  rpc ObterRestaurante(ObterRestauranteRequest) returns (RestauranteResponse);
+  rpc ListarRestaurantes(ListarRestaurantesRequest) returns (ListarRestaurantesResponse);
+}
+
+service CardapioService {
+  rpc ObterItemCardapio(ObterItemCardapioRequest) returns (ItemCardapioResponse);
+  rpc ListarItensCardapio(ListarItensCardapioRequest) returns (ListarItensCardapioResponse);
+}
+
+service TipoCozinhaService {
+  rpc ObterTipoCozinha(ObterTipoCozinhaRequest) returns (TipoCozinhaResponse);
+  rpc ListarTiposCozinha(ListarTiposCozinhaRequest) returns (ListarTiposCozinhaResponse);
+}
+
+// Messages para Perfil
+message Perfil {
+  int64 id = 1;
+  string nome = 2;
+}
+
+// Messages para Usuario
+message Usuario {
+  int64 id = 1;
+  string nome = 2;
+  string cpf = 3;
+  string email = 4;
+  string senha = 5;
+  int64 dt_cadastro = 6;
+  int64 id_perfil = 7;
+}
+
+// Messages para TipoCozinha
+message TipoCozinha {
+  int64 id = 1;
+  string nome = 2;
+  string descricao = 3;
+}
+
+message CriarTipoCozinhaRequest {
+  string nome = 1;
+  string descricao = 2;
+}
+
+message ObterTipoCozinhaRequest {
+  int64 id = 1;
+}
+
+message ListarTiposCozinhaRequest {
+  int32 page = 1;
+  int32 size = 2;
+}
+
+message TipoCozinhaResponse {
+  int64 id = 1;
+  string nome = 2;
+  string descricao = 3;
+}
+
+message ListarTiposCozinhaResponse {
+  repeated TipoCozinhaResponse tipos_cozinha = 1;
+  int32 total = 2;
+}
+
+// Messages para Endereco
+message Endereco {
+  int64 id = 1;
+  string rua = 2;
+  string bairro = 3;
+  string cep = 4;
+  string cidade = 5;
+  string uf = 6;
+  string numero = 7;
+  string complemento = 8;
+  string observacao = 9;
+  int64 id_restaurante = 10;
+}
+
+// Messages para Restaurante
+message Restaurante {
+  int64 id = 1;
+  string nome = 2;
+  string descricao = 3;
+  string horario_funcionamento = 4;
+  int64 id_tipo_cozinha = 5;
+  int64 id_usuario = 6;
+  Endereco endereco = 7;
+  TipoCozinha tipo_cozinha = 8;
+}
+
+message ObterRestauranteRequest {
+  int64 id = 1;
+}
+
+message ListarRestaurantesRequest {
+  int32 page = 1;
+  int32 size = 2;
+  optional int64 id_tipo_cozinha = 3;
+  optional string nome = 4;
+}
+
+message RestauranteResponse {
+  int64 id = 1;
+  string nome = 2;
+  string descricao = 3;
+  string horario_funcionamento = 4;
+  int64 id_tipo_cozinha = 5;
+  int64 id_usuario = 6;
+  Endereco endereco = 7;
+  TipoCozinha tipo_cozinha = 8;
+}
+
+message ListarRestaurantesResponse {
+  repeated RestauranteResponse restaurantes = 1;
+  int32 total = 2;
+}
+
+// Messages para Cardapio
+message ItemCardapio {
+  int64 id = 1;
+  string nome = 2;
+  string descricao = 3;
+  string preco = 4;
+  string foto = 5;
+  bool disponivel = 6;
+  int64 id_restaurante = 7;
+}
+
+message ObterItemCardapioRequest {
+  int64 id = 1;
+}
+
+message ListarItensCardapioRequest {
+  int64 id_restaurante = 1;
+  int32 page = 2;
+  int32 size = 3;
+  optional bool disponivel = 4;
+}
+
+message ItemCardapioResponse {
+  int64 id = 1;
+  string nome = 2;
+  string descricao = 3;
+  string preco = 4;
+  string foto = 5;
+  bool disponivel = 6;
+  int64 id_restaurante = 7;
+}
+
+message ListarItensCardapioResponse {
+  repeated ItemCardapioResponse itens = 1;
+  int32 total = 2;
+}
