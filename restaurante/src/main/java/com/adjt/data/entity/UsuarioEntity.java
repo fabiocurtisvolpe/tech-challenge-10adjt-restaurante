@@ -1,5 +1,6 @@
 package com.adjt.data.entity;
 
+import com.adjt.data.mapper.UsuarioSource;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -13,11 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "tb_cliente", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_cliente_cpf_email", columnNames = {"cpf", "email"})
+@Table(name = "tb_usuario", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_usuario_cpf_email", columnNames = {"cpf", "email"})
 })
 @Audited
-public class ClienteEntity extends PanacheEntityBase {
+public class UsuarioEntity extends PanacheEntityBase implements UsuarioSource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,15 +49,45 @@ public class ClienteEntity extends PanacheEntityBase {
     @Column(name = "dt_cadastro", updatable = false, columnDefinition = "TIMESTAMP(6)")
     public LocalDateTime dtCadastro;
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    public List<EnderecoEntity> enderecos = new ArrayList<>();
-
     @ManyToOne
-    @JoinColumn(name = "id_perfil", foreignKey = @ForeignKey(name = "fk_cliente_perfil"))
+    @JoinColumn(name = "id_perfil", foreignKey = @ForeignKey(name = "fk_usuario_perfil"))
     public PerfilEntity perfil;
 
-    public void addEndereco(EnderecoEntity endereco) {
-        endereco.cliente = this;
-        this.enderecos.add(endereco);
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    public List<RestauranteEntity> restaurantes = new ArrayList<>();
+
+    public void addRestaurante(RestauranteEntity restaurante) {
+        restaurante.usuario = this;
+        this.restaurantes.add(restaurante);
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public String getNome() {
+        return nome;
+    }
+
+    @Override
+    public String getCpf() {
+        return cpf;
+    }
+
+    @Override
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public String getSenha() {
+        return senha;
+    }
+
+    @Override
+    public LocalDateTime getDtCadastro() {
+        return dtCadastro;
     }
 }

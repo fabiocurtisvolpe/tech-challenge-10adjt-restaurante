@@ -1,5 +1,6 @@
 package com.adjt.data.entity;
 
+import com.adjt.data.mapper.ClienteSource;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -17,7 +18,7 @@ import java.util.List;
         @UniqueConstraint(name = "uk_cliente_cpf_email", columnNames = {"cpf", "email"})
 })
 @Audited
-public class ClienteEntity extends PanacheEntityBase {
+public class ClienteEntity extends PanacheEntityBase implements ClienteSource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,5 +59,35 @@ public class ClienteEntity extends PanacheEntityBase {
     public void addEndereco(EnderecoEntity endereco) {
         endereco.cliente = this;
         this.enderecos.add(endereco);
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public String getNome() {
+        return nome;
+    }
+
+    @Override
+    public String getCpf() {
+        return cpf;
+    }
+
+    @Override
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public String getSenha() {
+        return senha;
+    }
+
+    @Override
+    public LocalDateTime getDtCadastro() {
+        return dtCadastro;
     }
 }

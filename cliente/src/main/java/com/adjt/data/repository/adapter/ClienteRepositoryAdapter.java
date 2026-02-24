@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @ApplicationScoped
 public class ClienteRepositoryAdapter implements ClientePort<Cliente> {
@@ -57,7 +58,7 @@ public class ClienteRepositoryAdapter implements ClientePort<Cliente> {
 
     private void atualizarEnderecos(ClienteEntity clienteEntity, List<Endereco> enderecosModel) {
 
-        if (enderecosModel == null) return;
+        if ((enderecosModel == null) || (enderecosModel.isEmpty())) return;
 
         clienteEntity.enderecos.removeIf(existing ->
                 enderecosModel.stream().noneMatch(m -> m.getId() != null && m.getId().equals(existing.id))
@@ -86,24 +87,31 @@ public class ClienteRepositoryAdapter implements ClientePort<Cliente> {
         }
     }
 
+    @Transactional
     @Override
     public Boolean excluir(Long id) {
-
-        return null;
+        return this.repository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public Cliente obterPorId(Long id) {
+        ClienteEntity entity = this.repository.findById(id);
+        if (entity != null) return mapper.toModel(entity);
         return null;
     }
 
+    @Transactional
     @Override
     public Cliente obterPorCpf(String cpf) {
-        return null;
+        Optional<ClienteEntity> entity = this.repository.buscarPorCpf(cpf);
+        return entity.map(mapper::toModel).orElse(null);
     }
 
+    @Transactional
     @Override
     public Cliente obterPorEmail(String email) {
-        return null;
+        Optional<ClienteEntity> entity = this.repository.buscarPorEmail(email);
+        return entity.map(mapper::toModel).orElse(null);
     }
 }

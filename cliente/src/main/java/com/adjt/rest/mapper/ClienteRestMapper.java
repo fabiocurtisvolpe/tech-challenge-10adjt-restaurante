@@ -2,9 +2,9 @@ package com.adjt.rest.mapper;
 
 import com.adjt.core.model.Cliente;
 import com.adjt.core.model.Endereco;
+import com.adjt.data.mapper.ClienteMapper;
 import com.adjt.rest.dto.request.ClienteRequest;
 import com.adjt.rest.dto.response.ClienteResponse;
-import com.adjt.rest.dto.response.EnderecoResponse;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 public class ClienteRestMapper {
 
     @Inject
+    ClienteMapper clienteMapper;
+
+    @Inject
     EnderecoRestMapper enderecoRestMapper;
 
     public Cliente toModel(ClienteRequest request) {
@@ -22,14 +25,9 @@ public class ClienteRestMapper {
             return null;
         }
 
-        Cliente cliente = new Cliente();
-        cliente.setId(request.id);
-        cliente.setNome(request.nome);
-        cliente.setCpf(request.cpf);
-        cliente.setEmail(request.email);
-        cliente.setSenha(request.senha);
-        cliente.setDtCadastro(request.dtCadastro);
+        Cliente cliente = clienteMapper.toModel(request);
 
+        // Mapear endereços do request
         if (request.enderecos != null) {
             List<Endereco> enderecos = request.enderecos.stream()
                     .map(enderecoRestMapper::toModel)
@@ -54,10 +52,9 @@ public class ClienteRestMapper {
         response.dtCadastro = model.getDtCadastro();
 
         if (model.getEnderecos() != null) {
-            List<EnderecoResponse> enderecos = model.getEnderecos().stream()
+            response.enderecos = model.getEnderecos().stream()
                     .map(enderecoRestMapper::toResponse)
                     .collect(Collectors.toList());
-            response.enderecos = enderecos;
         }
 
         return response;

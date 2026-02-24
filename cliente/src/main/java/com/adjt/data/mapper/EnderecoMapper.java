@@ -7,22 +7,22 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class EnderecoMapper {
 
-    public Endereco toModel(EnderecoEntity entity) {
-        if (entity == null) {
+    public Endereco toModel(EnderecoSource source) {
+        if (source == null) {
             return null;
         }
 
         Endereco endereco = new Endereco();
-        endereco.setId(entity.id);
-        endereco.setRua(entity.rua);
-        endereco.setBairro(entity.bairro);
-        endereco.setCep(entity.cep);
-        endereco.setComplemento(entity.complemento);
-        endereco.setNumero(entity.numero);
-        endereco.setCidade(entity.cidade);
-        endereco.setUf(entity.uf);
-        endereco.setPrincipal(entity.principal);
-        endereco.setObservacao(entity.observacao);
+        endereco.setId(source.getId());
+        endereco.setRua(source.getRua());
+        endereco.setBairro(source.getBairro());
+        endereco.setCep(source.getCep());
+        endereco.setComplemento(source.getComplemento());
+        endereco.setNumero(source.getNumero());
+        endereco.setCidade(source.getCidade());
+        endereco.setUf(source.getUf());
+        endereco.setPrincipal(source.getPrincipal());
+        endereco.setObservacao(source.getObservacao());
 
         return endereco;
     }

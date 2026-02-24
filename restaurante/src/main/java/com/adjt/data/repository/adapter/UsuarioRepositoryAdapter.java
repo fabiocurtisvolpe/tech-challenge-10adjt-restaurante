@@ -1,39 +1,33 @@
 package com.adjt.data.repository.adapter;
 
-import com.adjt.core.model.Endereco;
 import com.adjt.core.model.Usuario;
 import com.adjt.core.port.UsuarioPort;
 import com.adjt.core.util.MensagemUtil;
-import com.adjt.data.entity.ClienteEntity;
-import com.adjt.data.entity.EnderecoEntity;
-import com.adjt.data.mapper.ClienteMapper;
-import com.adjt.data.mapper.EnderecoMapper;
-import com.adjt.data.repository.jpa.ClienteRepository;
+import com.adjt.data.entity.UsuarioEntity;
+import com.adjt.data.mapper.UsuarioMapper;
+import com.adjt.data.repository.jpa.UsuarioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @ApplicationScoped
 public class UsuarioRepositoryAdapter implements UsuarioPort<Usuario> {
 
-    private final ClienteRepository repository;
-    private final ClienteMapper mapper;
-    private final EnderecoMapper enderecoMapper;
+    private final UsuarioRepository repository;
+    private final UsuarioMapper mapper;
 
-    public UsuarioRepositoryAdapter(ClienteRepository repository,
-                                    ClienteMapper mapper,
-                                    EnderecoMapper enderecoMapper) {
+    public UsuarioRepositoryAdapter(UsuarioRepository repository,
+                                    UsuarioMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
-        this.enderecoMapper = enderecoMapper;
     }
 
     @Transactional
     @Override
     public Usuario criar(Usuario model) {
-        ClienteEntity entity = this.mapper.toEntity(model);
+        UsuarioEntity entity = this.mapper.toEntity(model);
         this.repository.persistAndFlush(entity);
         return this.mapper.toModel(entity);
     }
@@ -42,7 +36,7 @@ public class UsuarioRepositoryAdapter implements UsuarioPort<Usuario> {
     @Override
     public Usuario atualizar(Usuario model) {
 
-        ClienteEntity entity = repository.findById(model.getId());
+        UsuarioEntity entity = repository.findById(model.getId());
         Objects.requireNonNull(entity, MensagemUtil.NAO_FOI_POSSIVEL_EXECUTAR_OPERACAO);
 
         entity.nome = model.getNome();
@@ -50,60 +44,34 @@ public class UsuarioRepositoryAdapter implements UsuarioPort<Usuario> {
         entity.email = model.getEmail();
         entity.senha = model.getSenha();
 
-        atualizarEnderecos(entity, model.getEnderecos());
-
         return mapper.toModel(entity);
     }
 
-    private void atualizarEnderecos(ClienteEntity clienteEntity, List<Endereco> enderecosModel) {
-
-        if (enderecosModel == null) return;
-
-        clienteEntity.enderecos.removeIf(existing ->
-                enderecosModel.stream().noneMatch(m -> m.getId() != null && m.getId().equals(existing.id))
-        );
-
-        for (Endereco model : enderecosModel) {
-            if (model.getId() != null) {
-                clienteEntity.enderecos.stream()
-                        .filter(e -> e.id.equals(model.getId()))
-                        .findFirst()
-                        .ifPresent(existing -> {
-                            existing.rua = model.getRua();
-                            existing.bairro = model.getBairro();
-                            existing.cep = model.getCep();
-                            existing.complemento = model.getComplemento();
-                            existing.numero = model.getNumero();
-                            existing.cidade = model.getCidade();
-                            existing.uf = model.getUf();
-                            existing.principal = model.getPrincipal();
-                            existing.observacao = model.getObservacao();
-                        });
-            } else {
-                EnderecoEntity novaEntity = enderecoMapper.toEntity(model);
-                clienteEntity.addEndereco(novaEntity);
-            }
-        }
-    }
-
+    @Transactional
     @Override
     public Boolean excluir(Long id) {
-
-        return null;
+        return this.repository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public Usuario obterPorId(Long id) {
+        UsuarioEntity entity = this.repository.findById(id);
+        if (entity != null) return mapper.toModel(entity);
         return null;
     }
 
+    @Transactional
     @Override
     public Usuario obterPorCpf(String cpf) {
-        return null;
+        Optional<UsuarioEntity> entity = this.repository.buscarPorCpf(cpf);
+        return entity.map(mapper::toModel).orElse(null);
     }
 
+    @Transactional
     @Override
     public Usuario obterPorEmail(String email) {
-        return null;
+        Optional<UsuarioEntity> entity = this.repository.buscarPorEmail(email);
+        return entity.map(mapper::toModel).orElse(null);
     }
 }

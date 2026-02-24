@@ -1,12 +1,13 @@
 package com.adjt.rest.dto.request;
 
+import com.adjt.data.mapper.UsuarioSource;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClienteRequest {
+public class ClienteRequest implements UsuarioSource {
 
     @Positive(message = "O ID deve ser um número positivo maior que zero")
     public Long id;
@@ -33,6 +34,33 @@ public class ClienteRequest {
 
     public LocalDateTime dtCadastro;
 
-    @NotEmpty(message = "O usuário deve ter pelo um endereço")
-    public List<EnderecoRequest> enderecos = new ArrayList<>();
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public String getNome() {
+        return nome;
+    }
+
+    @Override
+    public String getCpf() {
+        return cpf;
+    }
+
+    @Override
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public String getSenha() {
+        return senha;
+    }
+
+    @Override
+    public LocalDateTime getDtCadastro() {
+        return dtCadastro;
+    }
 }

@@ -19,28 +19,32 @@ public class ClienteMapper {
     @Inject
     PerfilMapper perfilMapper;
 
-    public Cliente toModel(ClienteEntity entity) {
-        if (entity == null) {
+    public Cliente toModel(ClienteSource source) {
+        if (source == null) {
             return null;
         }
 
         Cliente cliente = new Cliente();
-        cliente.setId(entity.id);
-        cliente.setNome(entity.nome);
-        cliente.setCpf(entity.cpf);
-        cliente.setEmail(entity.email);
-        cliente.setSenha(entity.senha);
-        cliente.setDtCadastro(entity.dtCadastro);
+        cliente.setId(source.getId());
+        cliente.setNome(source.getNome());
+        cliente.setCpf(source.getCpf());
+        cliente.setEmail(source.getEmail());
+        cliente.setSenha(source.getSenha());
+        cliente.setDtCadastro(source.getDtCadastro());
 
-        if (entity.enderecos != null) {
-            List<Endereco> enderecos = entity.enderecos.stream()
-                    .map(enderecoMapper::toModel)
-                    .collect(Collectors.toList());
-            cliente.setEnderecos(enderecos);
-        }
+        // Se for ClienteEntity, mapear relacionamentos
+        if (source instanceof ClienteEntity entity) {
 
-        if (entity.perfil != null) {
-            cliente.setPerfil(perfilMapper.toModel(entity.perfil));
+            if (entity.enderecos != null) {
+                List<Endereco> enderecos = entity.enderecos.stream()
+                        .map(enderecoMapper::toModel)
+                        .collect(Collectors.toList());
+                cliente.setEnderecos(enderecos);
+            }
+
+            if (entity.perfil != null) {
+                cliente.setPerfil(perfilMapper.toModel(entity.perfil));
+            }
         }
 
         return cliente;

@@ -2,6 +2,8 @@ package com.adjt.core.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Usuario implements Serializable {
     
@@ -12,6 +14,7 @@ public class Usuario implements Serializable {
     protected String senha;
     protected LocalDateTime dtCadastro;
     protected Perfil perfil;
+    protected List<Restaurante> restaurantes = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -67,5 +70,13 @@ public class Usuario implements Serializable {
 
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
+    }
+
+    public List<Restaurante> getRestaurantes() {
+        return restaurantes;
+    }
+
+    public void setRestaurantes(List<Restaurante> restaurantes) {
+        this.restaurantes = restaurantes;
     }
 }

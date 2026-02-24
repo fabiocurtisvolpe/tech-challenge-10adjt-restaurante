@@ -1,6 +1,6 @@
 package com.adjt.data.service;
 
-import com.adjt.data.repository.jpa.ClienteRepository;
+import com.adjt.data.repository.jpa.UsuarioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -8,5 +8,5 @@ import jakarta.inject.Inject;
 public class ClienteService {
 
     @Inject
-    ClienteRepository repository;
+    UsuarioRepository repository;
 }
