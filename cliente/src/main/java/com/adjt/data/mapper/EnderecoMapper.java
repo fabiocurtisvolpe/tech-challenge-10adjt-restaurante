@@ -28,6 +28,7 @@ public class EnderecoMapper {
     }
 
     public EnderecoEntity toEntity(Endereco model) {
+
         if (model == null) {
             return null;
         }

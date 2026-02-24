@@ -3,9 +3,7 @@ package com.adjt.data.mapper;
 import com.adjt.core.model.Cliente;
 import com.adjt.core.model.Endereco;
 import com.adjt.data.entity.ClienteEntity;
-import com.adjt.data.entity.EnderecoEntity;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,11 +11,13 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class ClienteMapper {
 
-    @Inject
-    EnderecoMapper enderecoMapper;
+    private final EnderecoMapper enderecoMapper;
+    private final PerfilMapper perfilMapper;
 
-    @Inject
-    PerfilMapper perfilMapper;
+    public ClienteMapper(EnderecoMapper enderecoMapper, PerfilMapper perfilMapper) {
+        this.enderecoMapper = enderecoMapper;
+        this.perfilMapper = perfilMapper;
+    }
 
     public Cliente toModel(ClienteSource source) {
         if (source == null) {
@@ -32,7 +32,6 @@ public class ClienteMapper {
         cliente.setSenha(source.getSenha());
         cliente.setDtCadastro(source.getDtCadastro());
 
-        // Se for ClienteEntity, mapear relacionamentos
         if (source instanceof ClienteEntity entity) {
 
             if (entity.enderecos != null) {

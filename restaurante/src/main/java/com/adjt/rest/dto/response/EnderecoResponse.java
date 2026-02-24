@@ -10,6 +10,5 @@ public class EnderecoResponse {
     public String numero;
     public String cidade;
     public String uf;
-    public Boolean principal;
     public String observacao;
 }

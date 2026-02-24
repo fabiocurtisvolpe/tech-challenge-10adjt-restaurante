@@ -4,10 +4,8 @@ import com.adjt.data.mapper.UsuarioSource;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-public class ClienteRequest implements UsuarioSource {
+public class UsuarioRequest implements UsuarioSource {
 
     @Positive(message = "O ID deve ser um número positivo maior que zero")
     public Long id;
@@ -33,6 +31,10 @@ public class ClienteRequest implements UsuarioSource {
     public String senha;
 
     public LocalDateTime dtCadastro;
+
+    @NotNull(message = "O id perfil não pode estar vazio")
+    @Positive(message = "O id perfil deve ser maior que zero")
+    public Long idPerfil;
 
     @Override
     public Long getId() {

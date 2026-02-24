@@ -2,9 +2,9 @@ package com.adjt.rest.controller;
 
 import com.adjt.core.model.Usuario;
 import com.adjt.core.usecase.usuario.CriarUsuarioUseCase;
-import com.adjt.rest.dto.request.ClienteRequest;
-import com.adjt.rest.dto.response.ClienteResponse;
-import com.adjt.rest.mapper.ClienteRestMapper;
+import com.adjt.rest.dto.request.UsuarioRequest;
+import com.adjt.rest.dto.response.UsuarioResponse;
+import com.adjt.rest.mapper.UsuarioRestMapper;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -19,20 +19,20 @@ import jakarta.ws.rs.core.Response;
 public class ClienteController {
 
     private final CriarUsuarioUseCase criarUsuarioUseCase;
-    private final ClienteRestMapper clienteRestMapper;
+    private final UsuarioRestMapper usuarioRestMapper;
 
     public ClienteController(CriarUsuarioUseCase criarUsuarioUseCase,
-                             ClienteRestMapper clienteRestMapper) {
+                             UsuarioRestMapper usuarioRestMapper) {
         this.criarUsuarioUseCase = criarUsuarioUseCase;
-        this.clienteRestMapper = clienteRestMapper;
+        this.usuarioRestMapper = usuarioRestMapper;
     }
 
     @POST
-    public Response criar(@Valid ClienteRequest request) {
+    public Response criar(@Valid UsuarioRequest request) {
 
-        Usuario model = this.clienteRestMapper.toModel(request);
+        Usuario model = this.usuarioRestMapper.toModel(request);
         Usuario resp = this.criarUsuarioUseCase.run(model);
-        ClienteResponse response = this.clienteRestMapper.toResponse(resp);
+        UsuarioResponse response = this.usuarioRestMapper.toResponse(resp);
 
         return Response.status(Response.Status.CREATED).entity(response).build();
     }

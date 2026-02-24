@@ -12,7 +12,6 @@ public class EnderecoRequest implements EnderecoSource {
     public String numero;
     public String cidade;
     public String uf;
-    public Boolean principal;
     public String observacao;
 
     @Override

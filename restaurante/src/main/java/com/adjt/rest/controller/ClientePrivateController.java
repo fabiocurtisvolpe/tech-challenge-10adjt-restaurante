@@ -4,9 +4,9 @@ import com.adjt.core.model.Usuario;
 import com.adjt.core.usecase.usuario.AtualizarUsuarioUseCase;
 import com.adjt.core.usecase.usuario.ExcluirUsuarioUseCase;
 import com.adjt.core.usecase.usuario.ObterPorIdUsuarioUseCase;
-import com.adjt.rest.dto.request.ClienteRequest;
-import com.adjt.rest.dto.response.ClienteResponse;
-import com.adjt.rest.mapper.ClienteRestMapper;
+import com.adjt.rest.dto.request.UsuarioRequest;
+import com.adjt.rest.dto.response.UsuarioResponse;
+import com.adjt.rest.mapper.UsuarioRestMapper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -23,24 +23,24 @@ public class ClientePrivateController {
     private final ObterPorIdUsuarioUseCase obterPorIdUsuarioUseCase;
     private final ExcluirUsuarioUseCase excluirUsuarioUseCase;
 
-    private final ClienteRestMapper clienteRestMapper;
+    private final UsuarioRestMapper usuarioRestMapper;
 
     public ClientePrivateController(AtualizarUsuarioUseCase atualizarUsuarioUseCase,
                                     ObterPorIdUsuarioUseCase obterPorIdUsuarioUseCase,
                                     ExcluirUsuarioUseCase excluirUsuarioUseCase,
-                                    ClienteRestMapper clienteRestMapper) {
+                                    UsuarioRestMapper usuarioRestMapper) {
         this.atualizarUsuarioUseCase = atualizarUsuarioUseCase;
         this.obterPorIdUsuarioUseCase = obterPorIdUsuarioUseCase;
         this.excluirUsuarioUseCase = excluirUsuarioUseCase;
-        this.clienteRestMapper = clienteRestMapper;
+        this.usuarioRestMapper = usuarioRestMapper;
     }
 
     @PUT
-    public Response atualizar(@Valid ClienteRequest request) {
+    public Response atualizar(@Valid UsuarioRequest request) {
 
-        Usuario model = this.clienteRestMapper.toModel(request);
+        Usuario model = this.usuarioRestMapper.toModel(request);
         Usuario resp = this.atualizarUsuarioUseCase.run(model);
-        ClienteResponse response = this.clienteRestMapper.toResponse(resp);
+        UsuarioResponse response = this.usuarioRestMapper.toResponse(resp);
 
         return Response.status(Response.Status.CREATED).entity(response).build();
     }
@@ -50,7 +50,7 @@ public class ClientePrivateController {
     public Response obter(@PathParam("id") @Valid Long id) {
 
         Usuario resp = this.obterPorIdUsuarioUseCase.run(id);
-        ClienteResponse response = this.clienteRestMapper.toResponse(resp);
+        UsuarioResponse response = this.usuarioRestMapper.toResponse(resp);
 
         return Response.status(Response.Status.CREATED).entity(response).build();
     }

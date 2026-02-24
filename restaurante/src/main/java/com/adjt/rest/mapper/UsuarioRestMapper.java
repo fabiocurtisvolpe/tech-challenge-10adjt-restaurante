@@ -2,27 +2,29 @@ package com.adjt.rest.mapper;
 
 import com.adjt.core.model.Usuario;
 import com.adjt.data.mapper.UsuarioMapper;
-import com.adjt.rest.dto.request.ClienteRequest;
-import com.adjt.rest.dto.response.ClienteResponse;
+import com.adjt.rest.dto.request.UsuarioRequest;
+import com.adjt.rest.dto.response.UsuarioResponse;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class ClienteRestMapper {
+public class UsuarioRestMapper {
 
-    @Inject
-    UsuarioMapper usuarioMapper;
+    private final UsuarioMapper usuarioMapper;
 
-    public Usuario toModel(ClienteRequest request) {
+    public UsuarioRestMapper(UsuarioMapper usuarioMapper) {
+        this.usuarioMapper = usuarioMapper;
+    }
+
+    public Usuario toModel(UsuarioRequest request) {
         return usuarioMapper.toModel(request);
     }
 
-    public ClienteResponse toResponse(Usuario model) {
+    public UsuarioResponse toResponse(Usuario model) {
         if (model == null) {
             return null;
         }
 
-        ClienteResponse response = new ClienteResponse();
+        UsuarioResponse response = new UsuarioResponse();
         response.id = model.getId();
         response.nome = model.getNome();
         response.cpf = model.getCpf();
