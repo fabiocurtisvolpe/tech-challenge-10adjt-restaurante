@@ -4,7 +4,6 @@ import com.adjt.core.model.Restaurante;
 import com.adjt.core.model.Usuario;
 import com.adjt.data.entity.UsuarioEntity;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,10 +11,13 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class UsuarioMapper {
 
-    @Inject
-    PerfilMapper perfilMapper;
-    @Inject
-    RestauranteMapper restauranteMapper;
+    private final PerfilMapper perfilMapper;
+    private final RestauranteMapper restauranteMapper;
+
+    public UsuarioMapper(PerfilMapper perfilMapper, RestauranteMapper restauranteMapper) {
+        this.perfilMapper = perfilMapper;
+        this.restauranteMapper = restauranteMapper;
+    }
 
     public Usuario toModel(UsuarioSource source) {
         return toModel(source, true);

@@ -10,8 +10,11 @@ import jakarta.inject.Inject;
 @ApplicationScoped
 public class EnderecoRestMapper {
 
-    @Inject
-    EnderecoMapper enderecoMapper;
+    private final EnderecoMapper enderecoMapper;
+
+    public EnderecoRestMapper(EnderecoMapper enderecoMapper) {
+        this.enderecoMapper = enderecoMapper;
+    }
 
     public Endereco toModel(EnderecoRequest request) {
         return enderecoMapper.toModel(request);

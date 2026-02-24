@@ -10,5 +10,5 @@ public class CardapioResponse {
     public BigDecimal preco;
     public String foto;
     public Boolean disponivel;
-    public Integer idRestaurante;
+    public Long idRestaurante;
 }

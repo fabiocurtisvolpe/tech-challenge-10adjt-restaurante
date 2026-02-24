@@ -7,18 +7,18 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class CardapioMapper {
 
-    public Cardapio toModel(CardapioEntity entity) {
-        if (entity == null) {
+    public Cardapio toModel(CardapioSource source) {
+        if (source == null) {
             return null;
         }
 
         Cardapio cardapio = new Cardapio();
-        cardapio.setId(entity.id);
-        cardapio.setNome(entity.nome);
-        cardapio.setDescricao(entity.descricao);
-        cardapio.setPreco(entity.preco);
-        cardapio.setFoto(entity.foto);
-        cardapio.setDisponivel(entity.disponivel);
+        cardapio.setId(source.getId());
+        cardapio.setNome(source.getNome());
+        cardapio.setDescricao(source.getDescricao());
+        cardapio.setPreco(source.getPreco());
+        cardapio.setFoto(source.getFoto());
+        cardapio.setDisponivel(source.getDisponivel());
 
         return cardapio;
     }

@@ -1,10 +1,11 @@
 package com.adjt.rest.dto.request;
 
+import com.adjt.data.mapper.CardapioSource;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
-public class CardapioRequest {
+public class CardapioRequest implements CardapioSource {
 
     @Positive(message = "O ID deve ser um número positivo maior que zero")
     public Long id;
@@ -29,4 +30,34 @@ public class CardapioRequest {
     @NotNull(message = "O id restaurante não pode estar vazio")
     @Positive(message = "O id restaurante deve ser maior que zero")
     public Long idRestaurante;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public String getNome() {
+        return nome;
+    }
+
+    @Override
+    public String getDescricao() {
+        return descricao;
+    }
+
+    @Override
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    @Override
+    public String getFoto() {
+        return foto;
+    }
+
+    @Override
+    public Boolean getDisponivel() {
+        return disponivel;
+    }
 }

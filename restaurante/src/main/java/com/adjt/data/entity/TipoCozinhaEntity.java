@@ -1,5 +1,6 @@
 package com.adjt.data.entity;
 
+import com.adjt.data.mapper.TipoCozinhaSource;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +10,7 @@ import org.hibernate.envers.Audited;
 @Entity
 @Table(name = "tb_tipo_cozinha")
 @Audited
-public class TipoCozinhaEntity extends PanacheEntityBase {
+public class TipoCozinhaEntity extends PanacheEntityBase implements TipoCozinhaSource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +24,20 @@ public class TipoCozinhaEntity extends PanacheEntityBase {
     @Size(max = 1000)
     @Column(length = 1000)
     public String descricao;
+
+
+    @Override
+    public Long getId() {
+        return this.id;
+    }
+
+    @Override
+    public String getNome() {
+        return this.nome;
+    }
+
+    @Override
+    public String getDescricao() {
+        return this.descricao;
+    }
 }

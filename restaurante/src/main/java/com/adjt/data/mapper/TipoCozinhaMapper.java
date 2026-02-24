@@ -7,15 +7,15 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class TipoCozinhaMapper {
 
-    public TipoCozinha toModel(TipoCozinhaEntity entity) {
-        if (entity == null) {
+    public TipoCozinha toModel(TipoCozinhaSource source) {
+        if (source == null) {
             return null;
         }
 
         TipoCozinha tipoCozinha = new TipoCozinha();
-        tipoCozinha.setId(entity.id);
-        tipoCozinha.setNome(entity.nome);
-        tipoCozinha.setDescricao(entity.descricao);
+        tipoCozinha.setId(source.getId());
+        tipoCozinha.setNome(source.getNome());
+        tipoCozinha.setDescricao(source.getDescricao());
 
         return tipoCozinha;
     }

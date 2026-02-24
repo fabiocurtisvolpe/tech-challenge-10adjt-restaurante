@@ -1,10 +1,11 @@
 package com.adjt.rest.dto.request;
 
+import com.adjt.data.mapper.TipoCozinhaSource;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
-public class TipoCozinhaRequest {
+public class TipoCozinhaRequest implements TipoCozinhaSource {
 
     @Positive(message = "O ID deve ser um número positivo maior que zero")
     public Long id;
@@ -15,4 +16,19 @@ public class TipoCozinhaRequest {
 
     @Size(max = 1000, message = "A descrição deve ter no máximo 1000 caracteres")
     public String descricao;
+
+    @Override
+    public Long getId() {
+        return this.id;
+    }
+
+    @Override
+    public String getNome() {
+        return this.nome;
+    }
+
+    @Override
+    public String getDescricao() {
+        return this.descricao;
+    }
 }

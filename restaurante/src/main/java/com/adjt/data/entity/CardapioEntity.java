@@ -1,5 +1,6 @@
 package com.adjt.data.entity;
 
+import com.adjt.data.mapper.CardapioSource;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "tb_cardapio")
 @Audited
-public class CardapioEntity extends PanacheEntityBase {
+public class CardapioEntity extends PanacheEntityBase implements CardapioSource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,4 +44,34 @@ public class CardapioEntity extends PanacheEntityBase {
     @ManyToOne
     @JoinColumn(name = "id_restaurante", nullable = false)
     public RestauranteEntity restaurante;
+    
+    @Override
+    public Long getId() {
+        return 0L;
+    }
+
+    @Override
+    public String getNome() {
+        return "";
+    }
+
+    @Override
+    public String getDescricao() {
+        return "";
+    }
+
+    @Override
+    public BigDecimal getPreco() {
+        return null;
+    }
+
+    @Override
+    public String getFoto() {
+        return "";
+    }
+
+    @Override
+    public Boolean getDisponivel() {
+        return null;
+    }
 }

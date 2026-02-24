@@ -5,7 +5,6 @@ import com.adjt.core.model.Endereco;
 import com.adjt.core.model.Restaurante;
 import com.adjt.data.entity.RestauranteEntity;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,17 +12,20 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class RestauranteMapper {
 
-    @Inject
-    TipoCozinhaMapper tipoCozinhaMapper;
+    private final TipoCozinhaMapper tipoCozinhaMapper;
+    private final UsuarioMapper usuarioMapper;
+    private final EnderecoMapper enderecoMapper;
+    private final CardapioMapper cardapioMapper;
 
-    @Inject
-    UsuarioMapper usuarioMapper;
-
-    @Inject
-    EnderecoMapper enderecoMapper;
-
-    @Inject
-    CardapioMapper cardapioMapper;
+    public RestauranteMapper(TipoCozinhaMapper tipoCozinhaMapper,
+                             UsuarioMapper usuarioMapper,
+                             EnderecoMapper enderecoMapper,
+                             CardapioMapper cardapioMapper) {
+        this.tipoCozinhaMapper = tipoCozinhaMapper;
+        this.usuarioMapper = usuarioMapper;
+        this.enderecoMapper = enderecoMapper;
+        this.cardapioMapper = cardapioMapper;
+    }
 
     public Restaurante toModel(RestauranteEntity entity) {
         if (entity == null) {
