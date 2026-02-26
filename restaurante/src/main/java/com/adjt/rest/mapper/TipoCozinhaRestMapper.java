@@ -20,7 +20,7 @@ public class TipoCozinhaRestMapper {
         return tipoCozinhaMapper.toModel(request);
     }
 
-    public TipoCozinhaResponse toResponse(Cardapio model) {
+    public TipoCozinhaResponse toResponse(TipoCozinha model) {
         if (model == null) {
             return null;
         }

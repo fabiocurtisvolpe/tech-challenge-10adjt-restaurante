@@ -5,6 +5,7 @@ import com.adjt.core.usecase.cliente.CriarClienteUseCase;
 import com.adjt.rest.dto.request.ClienteRequest;
 import com.adjt.rest.dto.response.ClienteResponse;
 import com.adjt.rest.mapper.ClienteRestMapper;
+import com.adjt.service.KeycloakSyncService;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -20,11 +21,14 @@ public class ClienteController {
 
     private final CriarClienteUseCase criarClienteUseCase;
     private final ClienteRestMapper clienteRestMapper;
+    private final KeycloakSyncService keycloakSyncService;
 
     public ClienteController(CriarClienteUseCase criarClienteUseCase,
-                             ClienteRestMapper clienteRestMapper) {
+                             ClienteRestMapper clienteRestMapper,
+                             KeycloakSyncService keycloakSyncService) {
         this.criarClienteUseCase = criarClienteUseCase;
         this.clienteRestMapper = clienteRestMapper;
+        this.keycloakSyncService = keycloakSyncService;
     }
 
     @POST
@@ -32,6 +36,8 @@ public class ClienteController {
 
         Cliente model = this.clienteRestMapper.toModel(request);
         Cliente resp = this.criarClienteUseCase.run(model);
+        this.keycloakSyncService.criarUsuario(model);
+
         ClienteResponse response = this.clienteRestMapper.toResponse(resp);
 
         return Response.status(Response.Status.CREATED).entity(response).build();

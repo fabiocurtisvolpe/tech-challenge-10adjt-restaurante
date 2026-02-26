@@ -8,34 +8,35 @@
   "resetPasswordAllowed": false,
   "editUsernameAllowed": false,
   "bruteForceProtected": true,
+  "verifyEmail": false,
   "clients": [
     {
       "clientId": "backend-service",
       "enabled": true,
-      "clientAuthenticatorType": "client-secret",
-      "secret": "seu-secret-aqui",
+      "publicClient": true,
+      "clientAuthenticatorType": "none",
       "standardFlowEnabled": true,
       "implicitFlowEnabled": false,
       "directAccessGrantsEnabled": true,
-      "serviceAccountsEnabled": true,
-      "publicClient": false,
+      "serviceAccountsEnabled": false,
       "protocol": "openid-connect",
       "attributes": {
-        "access.token.lifespan": "300"
+        "access.token.lifespan": "3600"
       },
-      "redirectUris": ["*"],
-      "webOrigins": ["*"]
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "fullScopeAllowed": true
     }
   ],
   "roles": {
     "realm": [
       {
-        "name": "ROLE_CLIENTE",
-        "description": "Cliente role"
-      },
-      {
         "name": "ROLE_ADMIN",
-        "description": "Admin role"
+        "description": "Papel administrativo"
       }
     ]
   },
@@ -43,6 +44,8 @@
     {
       "username": "admin",
       "enabled": true,
+      "email": "admin@admin.com",
+      "firstName": "Admin",
       "credentials": [
         {
           "type": "password",
@@ -50,7 +53,9 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["ROLE_ADMIN"]
+      "realmRoles": [
+        "ROLE_ADMIN"
+      ]
     }
   ]
 }

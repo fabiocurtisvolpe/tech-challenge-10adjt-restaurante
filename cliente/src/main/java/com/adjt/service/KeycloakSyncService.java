@@ -1,16 +1,22 @@
 package com.adjt.service;
 
+import com.adjt.core.model.Cliente;
 import com.adjt.data.repository.jpa.PerfilRepository;
 import io.quarkus.runtime.StartupEvent;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
+import org.jspecify.annotations.NonNull;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
+import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
+import org.keycloak.representations.idm.UserRepresentation;
 
+import java.util.Collections;
 import java.util.List;
 
 @ApplicationScoped
@@ -42,16 +48,18 @@ public class KeycloakSyncService {
         this.perfilRepository = perfilRepository;
     }
 
-    public void onStart(@Observes StartupEvent ev) {
-        try {
-            Keycloak keycloak = KeycloakBuilder.builder()
-                    .serverUrl(serverUrl)
-                    .realm(adminRealm)
-                    .clientId(clientId)
-                    .username(username)
-                    .password(password)
-                    .build();
+    private Keycloak getClient() {
+        return KeycloakBuilder.builder()
+                .serverUrl(serverUrl)
+                .realm(adminRealm)
+                .clientId(clientId)
+                .username(username)
+                .password(password)
+                .build();
+    }
 
+    public void onStart(@Observes StartupEvent ev) {
+        try (Keycloak keycloak = getClient()) {
             List<String> perfisDoBanco = perfilRepository.listAll()
                     .stream()
                     .map(p -> p.nome)
@@ -71,10 +79,85 @@ public class KeycloakSyncService {
                     }
                 }
             });
-
-            keycloak.close();
         } catch (Exception e) {
-            LOG.error("Erro ao sincronizar roles com Keycloak", e);
+            LOG.error("Erro ao sincronizar roles com Keycloak no startup", e);
+        }
+    }
+
+    public void criarUsuario(Cliente cliente) {
+        try (Keycloak keycloak = getClient()) {
+            UserRepresentation user = getUserRepresentation(cliente);
+
+            try (Response response = keycloak.realm(targetRealm).users().create(user)) {
+                if (response.getStatus() == 201) {
+                    String userId = response.getLocation().getPath().replaceAll(".*/([^/]+)$", "$1");
+
+                    // Definir senha separadamente
+                    CredentialRepresentation credential = new CredentialRepresentation();
+                    credential.setType(CredentialRepresentation.PASSWORD);
+                    credential.setValue(cliente.getSenha());
+                    credential.setTemporary(false);
+
+                    keycloak.realm(targetRealm).users().get(userId).resetPassword(credential);
+
+                    atribuirRole(keycloak, userId);
+                    LOG.infof("Usuário criado com sucesso no Keycloak: %s", cliente.getEmail());
+                } else {
+                    LOG.errorf("Erro ao criar usuário %s. Status: %d", cliente.getEmail(), response.getStatus());
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Erro ao processar criação de usuário no Keycloak", e);
+        }
+    }
+
+    public void atualizarUsuario(Cliente cliente) {
+        try (Keycloak keycloak = getClient()) {
+            List<UserRepresentation> users = keycloak.realm(targetRealm).users().search(cliente.getEmail());
+
+            if (!users.isEmpty()) {
+                UserRepresentation user = users.getFirst();
+                user.setFirstName(cliente.getNome());
+                keycloak.realm(targetRealm).users().get(user.getId()).update(user);
+                LOG.infof("Usuário atualizado no Keycloak: %s", cliente.getEmail());
+            }
+        } catch (Exception e) {
+            LOG.error("Erro ao atualizar usuário no Keycloak", e);
+        }
+    }
+
+    public void excluirUsuario(String email) {
+        try (Keycloak keycloak = getClient()) {
+            List<UserRepresentation> users = keycloak.realm(targetRealm).users().search(email);
+            if (!users.isEmpty()) {
+                try (Response _ = keycloak.realm(targetRealm).users().delete(users.getFirst().getId())) {
+                    LOG.infof("Usuário removido do Keycloak: %s", email);
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Erro ao excluir usuário no Keycloak", e);
+        }
+    }
+
+    private static @NonNull UserRepresentation getUserRepresentation(Cliente cliente) {
+        UserRepresentation user = new UserRepresentation();
+        user.setUsername(cliente.getEmail());
+        user.setEmail(cliente.getEmail());
+        user.setFirstName(cliente.getNome());
+        user.setLastName("-");
+        user.setEnabled(true);
+        user.setEmailVerified(true);
+        user.setRequiredActions(Collections.emptyList());
+        return user;
+    }
+
+    private void atribuirRole(Keycloak keycloak, String userId) {
+        try {
+            RoleRepresentation role = keycloak.realm(targetRealm).roles().get("ROLE_CLIENTE").toRepresentation();
+            keycloak.realm(targetRealm).users().get(userId).roles().realmLevel().add(Collections.singletonList(role));
+            LOG.infof("Role ROLE_CLIENTE atribuída ao usuário ID: %s", userId);
+        } catch (Exception e) {
+            LOG.error("Erro ao atribuir role ao usuário", e);
         }
     }
 }

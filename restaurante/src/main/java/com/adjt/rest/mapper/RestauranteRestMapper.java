@@ -5,8 +5,22 @@ import com.adjt.rest.dto.request.RestauranteRequest;
 import com.adjt.rest.dto.response.RestauranteResponse;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.util.stream.Collectors;
+
 @ApplicationScoped
 public class RestauranteRestMapper {
+
+    private final TipoCozinhaRestMapper tipoCozinhaMapper;
+    private final CardapioRestMapper cardapioMapper;
+    private final EnderecoRestMapper enderecoMapper;
+
+    public RestauranteRestMapper(TipoCozinhaRestMapper tipoCozinhaMapper,
+                                 CardapioRestMapper cardapioMapper,
+                                 EnderecoRestMapper enderecoMapper) {
+        this.tipoCozinhaMapper = tipoCozinhaMapper;
+        this.cardapioMapper = cardapioMapper;
+        this.enderecoMapper = enderecoMapper;
+    }
 
     public Restaurante toModel(RestauranteRequest request) {
         if (request == null) {
@@ -23,6 +37,33 @@ public class RestauranteRestMapper {
     }
 
     public RestauranteResponse toResponse(Restaurante model) {
-        return null;
+
+        if (model == null) {
+            return null;
+        }
+
+        RestauranteResponse restaurante = new RestauranteResponse();
+        restaurante.id = model.getId();
+        restaurante.nome = model.getNome();
+        restaurante.descricao = model.getDescricao();
+        restaurante.horarioFuncionamento = model.getHorarioFuncionamento();
+
+        if (model.getTipoCozinha() != null) {
+            restaurante.tipoCozinha = tipoCozinhaMapper.toResponse(model.getTipoCozinha());
+        }
+
+        if (model.getCardapios() != null) {
+            restaurante.cardapios = model.getCardapios().stream()
+                    .map(cardapioMapper::toResponse)
+                    .collect(Collectors.toList());
+        }
+
+        if (model.getEnderecos() != null) {
+            restaurante.enderecos = model.getEnderecos().stream()
+                    .map(enderecoMapper::toResponse)
+                    .collect(Collectors.toList());
+        }
+
+        return restaurante;
     }
 }

@@ -11,9 +11,9 @@ public class RestauranteResponse {
     public Long id;
     public String nome;
     public String descricao;
-    protected Map<String, DiaFuncionamento> horarioFuncionamento;
-    public Long idTipoCozinha;
+    public String horarioFuncionamento;
+    public TipoCozinhaResponse tipoCozinha;
     public Long idDono;
     public List<EnderecoResponse> enderecos = new ArrayList<>();
-    public List<CardapioResponse> cardapioRequests = new ArrayList<>();
+    public List<CardapioResponse> cardapios = new ArrayList<>();
 }
