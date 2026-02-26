@@ -18,6 +18,7 @@ import org.keycloak.representations.idm.UserRepresentation;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @ApplicationScoped
 public class KeycloakSyncService {
@@ -118,6 +119,17 @@ public class KeycloakSyncService {
             if (!users.isEmpty()) {
                 UserRepresentation user = users.getFirst();
                 user.setFirstName(cliente.getNome());
+                user.setLastName("-");
+
+                if (!Objects.equals(cliente.getEmail(), user.getEmail())) {
+                    user.setEmail(cliente.getEmail());
+                    user.setUsername(cliente.getEmail());
+                }
+
+                user.setEmailVerified(true);
+                keycloak.realm(targetRealm).users().get(user.getId()).update(user);
+                LOG.infof("Usuário atualizado no Keycloak: %s", cliente.getEmail());
+
                 keycloak.realm(targetRealm).users().get(user.getId()).update(user);
                 LOG.infof("Usuário atualizado no Keycloak: %s", cliente.getEmail());
             }
@@ -130,6 +142,7 @@ public class KeycloakSyncService {
         try (Keycloak keycloak = getClient()) {
             List<UserRepresentation> users = keycloak.realm(targetRealm).users().search(email);
             if (!users.isEmpty()) {
+                keycloak.realm(targetRealm).users().get(users.getFirst().getId()).logout();
                 try (Response _ = keycloak.realm(targetRealm).users().delete(users.getFirst().getId())) {
                     LOG.infof("Usuário removido do Keycloak: %s", email);
                 }

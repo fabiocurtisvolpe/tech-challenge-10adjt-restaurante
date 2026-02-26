@@ -13,8 +13,9 @@
     {
       "clientId": "backend-service",
       "enabled": true,
-      "publicClient": true,
-      "clientAuthenticatorType": "none",
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "s4lkS22kfayLL/diMrkfQArD99+ZBjUndgjFIirUUFw=",
       "standardFlowEnabled": true,
       "implicitFlowEnabled": false,
       "directAccessGrantsEnabled": true,

@@ -7,6 +7,7 @@ import com.adjt.core.usecase.cliente.ObterPorIdClienteUseCase;
 import com.adjt.rest.dto.request.ClienteRequest;
 import com.adjt.rest.dto.response.ClienteResponse;
 import com.adjt.rest.mapper.ClienteRestMapper;
+import com.adjt.service.KeycloakSyncService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -25,14 +26,18 @@ public class ClientePrivateController {
 
     private final ClienteRestMapper clienteRestMapper;
 
+    private final KeycloakSyncService keycloakSyncService;
+
     public ClientePrivateController(AtualizarClienteUseCase atualizarClienteUseCase,
                                     ObterPorIdClienteUseCase obterPorIdClienteUseCase,
                                     ExcluirClienteUseCase excluirClienteUseCase,
-                                    ClienteRestMapper clienteRestMapper) {
+                                    ClienteRestMapper clienteRestMapper,
+                                    KeycloakSyncService keycloakSyncService) {
         this.atualizarClienteUseCase = atualizarClienteUseCase;
         this.obterPorIdClienteUseCase = obterPorIdClienteUseCase;
         this.excluirClienteUseCase = excluirClienteUseCase;
         this.clienteRestMapper = clienteRestMapper;
+        this.keycloakSyncService = keycloakSyncService;
     }
 
     @PUT
@@ -40,6 +45,8 @@ public class ClientePrivateController {
 
         Cliente model = this.clienteRestMapper.toModel(request);
         Cliente resp = this.atualizarClienteUseCase.run(model);
+        this.keycloakSyncService.atualizarUsuario(model);
+
         ClienteResponse response = this.clienteRestMapper.toResponse(resp);
 
         return Response.status(Response.Status.CREATED).entity(response).build();
@@ -58,7 +65,11 @@ public class ClientePrivateController {
     @DELETE
     @Path("/{id}")
     public Response excluir(@PathParam("id") @Valid Long id) {
+        Cliente cliente = this.obterPorIdClienteUseCase.run(id);
+
         Boolean resp = this.excluirClienteUseCase.run(id);
+        this.keycloakSyncService.excluirUsuario(cliente.getEmail());
+
         return Response.status(Response.Status.CREATED).entity(resp).build();
     }
 }
