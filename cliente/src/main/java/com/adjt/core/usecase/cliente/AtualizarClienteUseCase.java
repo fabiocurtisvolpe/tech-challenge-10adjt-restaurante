@@ -6,6 +6,7 @@ import com.adjt.core.validator.ClienteValidator;
 import com.adjt.core.validator.EnderecoValidator;
 import jakarta.enterprise.context.ApplicationScoped;
 
+
 @ApplicationScoped
 public class AtualizarClienteUseCase {
 

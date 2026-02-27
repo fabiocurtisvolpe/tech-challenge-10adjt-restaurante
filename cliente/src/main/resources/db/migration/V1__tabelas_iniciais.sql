@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS tb_cliente (
                                           senha VARCHAR(255) NOT NULL,
                                           dt_cadastro TIMESTAMP(6),
                                           id_perfil BIGINT,
+                                          keycloak_id UUID UNIQUE,
                                           CONSTRAINT fk_cliente_perfil FOREIGN KEY (id_perfil) REFERENCES tb_perfil(id),
                                           CONSTRAINT uk_cliente_cpf_email UNIQUE (cpf, email)
 );
@@ -39,6 +40,7 @@ CREATE TABLE IF NOT EXISTS tb_cliente_aud (
                                               senha VARCHAR(255),
                                               dt_cadastro TIMESTAMP(6),
                                               id_perfil BIGINT,
+                                              keycloak_id UUID,
                                               PRIMARY KEY (id, rev),
                                               CONSTRAINT fk_cliente_aud_revinfo FOREIGN KEY (rev) REFERENCES revinfo (rev)
 );

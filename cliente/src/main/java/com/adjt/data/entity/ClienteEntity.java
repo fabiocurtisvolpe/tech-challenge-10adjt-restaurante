@@ -12,6 +12,7 @@ import org.hibernate.envers.Audited;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_cliente", uniqueConstraints = {
@@ -56,6 +57,9 @@ public class ClienteEntity extends PanacheEntityBase implements ClienteSource {
     @JoinColumn(name = "id_perfil", foreignKey = @ForeignKey(name = "fk_cliente_perfil"))
     public PerfilEntity perfil;
 
+    @Column(name = "keycloak_id", unique = true)
+    public UUID keycloakId;
+
     public void addEndereco(EnderecoEntity endereco) {
         endereco.cliente = this;
         this.enderecos.add(endereco);
@@ -90,4 +94,11 @@ public class ClienteEntity extends PanacheEntityBase implements ClienteSource {
     public LocalDateTime getDtCadastro() {
         return dtCadastro;
     }
+
+    @Override
+    public UUID getKeycloakId() {
+        return keycloakId;
+    }
+
+
 }

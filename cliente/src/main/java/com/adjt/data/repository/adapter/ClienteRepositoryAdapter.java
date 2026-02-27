@@ -50,6 +50,7 @@ public class ClienteRepositoryAdapter implements ClientePort<Cliente> {
         entity.cpf = model.getCpf();
         entity.email = model.getEmail();
         entity.senha = model.getSenha();
+        entity.keycloakId = model.getKeycloakId();
 
         atualizarEnderecos(entity, model.getEnderecos());
 

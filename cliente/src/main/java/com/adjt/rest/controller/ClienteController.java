@@ -1,6 +1,7 @@
 package com.adjt.rest.controller;
 
 import com.adjt.core.model.Cliente;
+import com.adjt.core.usecase.cliente.AtualizarClienteUseCase;
 import com.adjt.core.usecase.cliente.CriarClienteUseCase;
 import com.adjt.rest.dto.request.ClienteRequest;
 import com.adjt.rest.dto.response.ClienteResponse;
@@ -13,6 +14,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import java.util.UUID;
 
 @Path("/cliente")
 @Produces(MediaType.APPLICATION_JSON)
@@ -35,8 +38,10 @@ public class ClienteController {
     public Response criar(@Valid ClienteRequest request) {
 
         Cliente model = this.clienteRestMapper.toModel(request);
+        UUID keycloakId = this.keycloakSyncService.criarUsuario(model);
+        model.setKeycloakId(keycloakId);
+
         Cliente resp = this.criarClienteUseCase.run(model);
-        this.keycloakSyncService.criarUsuario(model);
 
         ClienteResponse response = this.clienteRestMapper.toResponse(resp);
 

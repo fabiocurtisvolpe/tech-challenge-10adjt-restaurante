@@ -31,6 +31,7 @@ public class ClienteMapper {
         cliente.setEmail(source.getEmail());
         cliente.setSenha(source.getSenha());
         cliente.setDtCadastro(source.getDtCadastro());
+        cliente.setKeycloakId(source.getKeycloakId());
 
         if (source instanceof ClienteEntity entity) {
 
@@ -61,6 +62,7 @@ public class ClienteMapper {
         entity.email = model.getEmail();
         entity.senha = model.getSenha();
         entity.dtCadastro = model.getDtCadastro();
+        entity.keycloakId = model.getKeycloakId();
 
         if (model.getEnderecos() != null) {
             model.getEnderecos().stream()

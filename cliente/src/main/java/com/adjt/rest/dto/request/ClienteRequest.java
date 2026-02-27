@@ -6,6 +6,7 @@ import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ClienteRequest implements ClienteSource {
 
@@ -65,5 +66,10 @@ public class ClienteRequest implements ClienteSource {
     @Override
     public LocalDateTime getDtCadastro() {
         return dtCadastro;
+    }
+
+    @Override
+    public UUID getKeycloakId() {
+        return null;
     }
 }

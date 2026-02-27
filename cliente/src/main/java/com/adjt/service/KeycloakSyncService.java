@@ -1,5 +1,6 @@
 package com.adjt.service;
 
+import com.adjt.core.exception.NotificacaoException;
 import com.adjt.core.model.Cliente;
 import com.adjt.data.repository.jpa.PerfilRepository;
 import io.quarkus.runtime.StartupEvent;
@@ -19,6 +20,7 @@ import org.keycloak.representations.idm.UserRepresentation;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @ApplicationScoped
 public class KeycloakSyncService {
@@ -85,7 +87,7 @@ public class KeycloakSyncService {
         }
     }
 
-    public void criarUsuario(Cliente cliente) {
+    public UUID criarUsuario(Cliente cliente) {
         try (Keycloak keycloak = getClient()) {
             UserRepresentation user = getUserRepresentation(cliente);
 
@@ -103,12 +105,20 @@ public class KeycloakSyncService {
 
                     atribuirRole(keycloak, userId);
                     LOG.infof("Usuário criado com sucesso no Keycloak: %s", cliente.getEmail());
+
+                    return UUID.fromString(userId);
+
                 } else {
-                    LOG.errorf("Erro ao criar usuário %s. Status: %d", cliente.getEmail(), response.getStatus());
+
+                    String msg = "Erro ao criar usuário %s. Status: %d".formatted(cliente.getEmail(), response.getStatus());
+                    LOG.error(msg);
+
+                    throw new NotificacaoException(msg);
                 }
             }
         } catch (Exception e) {
             LOG.error("Erro ao processar criação de usuário no Keycloak", e);
+            throw new NotificacaoException("Erro ao processar criação de usuário no Keycloak");
         }
     }
 

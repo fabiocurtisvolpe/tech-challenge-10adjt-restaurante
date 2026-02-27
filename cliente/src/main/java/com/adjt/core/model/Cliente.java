@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Cliente implements Serializable {
     
@@ -15,6 +16,7 @@ public class Cliente implements Serializable {
     protected LocalDateTime dtCadastro;
     protected List<Endereco> enderecos = new ArrayList<>();
     protected Perfil perfil;
+    protected UUID keycloakId;
 
     public Long getId() {
         return id;
@@ -78,5 +80,13 @@ public class Cliente implements Serializable {
 
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
+    }
+
+    public UUID getKeycloakId() {
+        return keycloakId;
+    }
+
+    public void setKeycloakId(UUID keycloakId) {
+        this.keycloakId = keycloakId;
     }
 }
