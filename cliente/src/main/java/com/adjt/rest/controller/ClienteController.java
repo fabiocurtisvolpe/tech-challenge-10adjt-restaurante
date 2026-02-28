@@ -37,7 +37,7 @@ public class ClienteController {
     public Response criar(@Valid ClienteRequest request) {
 
         Cliente model = this.clienteRestMapper.toModel(request);
-        UUID keycloakId = this.keycloakSyncService.criarUsuario(model);
+        UUID keycloakId = this.keycloakSyncService.criarUsuario(model, request.senha);
         model.setKeycloakId(keycloakId);
 
         Cliente resp = this.criarClienteUseCase.run(model);

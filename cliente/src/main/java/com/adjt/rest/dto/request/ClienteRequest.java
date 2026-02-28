@@ -59,11 +59,6 @@ public class ClienteRequest implements ClienteSource {
     }
 
     @Override
-    public String getSenha() {
-        return senha;
-    }
-
-    @Override
     public LocalDateTime getDtCadastro() {
         return dtCadastro;
     }

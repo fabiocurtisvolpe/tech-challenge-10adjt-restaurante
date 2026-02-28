@@ -8,7 +8,6 @@ public interface ClienteSource {
     String getNome();
     String getCpf();
     String getEmail();
-    String getSenha();
     LocalDateTime getDtCadastro();
     UUID getKeycloakId();
 }

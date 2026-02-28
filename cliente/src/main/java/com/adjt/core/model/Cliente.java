@@ -12,7 +12,6 @@ public class Cliente implements Serializable {
     protected String nome;
     protected String cpf;
     protected String email;
-    protected String senha;
     protected LocalDateTime dtCadastro;
     protected List<Endereco> enderecos = new ArrayList<>();
     protected Perfil perfil;
@@ -48,14 +47,6 @@ public class Cliente implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public LocalDateTime getDtCadastro() {

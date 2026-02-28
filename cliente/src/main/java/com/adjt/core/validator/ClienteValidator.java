@@ -3,20 +3,12 @@ package com.adjt.core.validator;
 import com.adjt.core.exception.NotificacaoException;
 import com.adjt.core.model.Cliente;
 import com.adjt.core.util.MensagemUtil;
-import com.adjt.rest.interceptor.UserContext;
-import io.quarkus.security.ForbiddenException;
 
 import java.util.regex.Pattern;
 
 public class ClienteValidator {
 
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-
-    public static void validarClienteLogado(Cliente cliente, UserContext userContext) {
-        if (!cliente.getKeycloakId().equals(userContext.getKeycloakId())) {
-            throw new ForbiddenException(MensagemUtil.NAO_FOI_POSSIVEL_EXECUTAR_OPERACAO);
-        }
-    }
 
     public static void validarId(Cliente cliente) {
         if (cliente.getId() == null) {
@@ -56,10 +48,6 @@ public class ClienteValidator {
 
         if (!validarEmail(cliente.getEmail())) {
             throw new NotificacaoException(MensagemUtil.EMAIL_INVALIDO);
-        }
-
-        if (cliente.getSenha() == null || cliente.getSenha().trim().isEmpty()) {
-            throw new NotificacaoException(MensagemUtil.SENHA_INVALIDO);
         }
     }
 

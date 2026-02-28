@@ -41,11 +41,6 @@ public class ClienteEntity extends PanacheEntityBase implements ClienteSource {
     @Column(length = 50, nullable = false)
     public String email;
 
-    @NotBlank
-    @Size(max = 255)
-    @Column(nullable = false)
-    public String senha;
-
     @CreationTimestamp
     @Column(name = "dt_cadastro", updatable = false, columnDefinition = "TIMESTAMP(6)")
     public LocalDateTime dtCadastro;
@@ -86,11 +81,6 @@ public class ClienteEntity extends PanacheEntityBase implements ClienteSource {
     }
 
     @Override
-    public String getSenha() {
-        return senha;
-    }
-
-    @Override
     public LocalDateTime getDtCadastro() {
         return dtCadastro;
     }
@@ -99,6 +89,4 @@ public class ClienteEntity extends PanacheEntityBase implements ClienteSource {
     public UUID getKeycloakId() {
         return keycloakId;
     }
-
-
 }

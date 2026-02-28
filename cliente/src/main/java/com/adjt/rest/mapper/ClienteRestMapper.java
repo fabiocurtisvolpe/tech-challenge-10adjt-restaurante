@@ -48,7 +48,6 @@ public class ClienteRestMapper {
         response.nome = model.getNome();
         response.cpf = model.getCpf();
         response.email = model.getEmail();
-        response.senha = model.getSenha();
         response.dtCadastro = model.getDtCadastro();
 
         if (model.getEnderecos() != null) {

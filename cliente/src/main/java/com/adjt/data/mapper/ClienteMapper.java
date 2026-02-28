@@ -29,7 +29,6 @@ public class ClienteMapper {
         cliente.setNome(source.getNome());
         cliente.setCpf(source.getCpf());
         cliente.setEmail(source.getEmail());
-        cliente.setSenha(source.getSenha());
         cliente.setDtCadastro(source.getDtCadastro());
         cliente.setKeycloakId(source.getKeycloakId());
 
@@ -60,7 +59,6 @@ public class ClienteMapper {
         entity.nome = model.getNome();
         entity.cpf = model.getCpf();
         entity.email = model.getEmail();
-        entity.senha = model.getSenha();
         entity.dtCadastro = model.getDtCadastro();
         entity.keycloakId = model.getKeycloakId();
 

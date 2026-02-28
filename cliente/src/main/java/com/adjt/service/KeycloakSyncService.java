@@ -87,7 +87,7 @@ public class KeycloakSyncService {
         }
     }
 
-    public UUID criarUsuario(Cliente cliente) {
+    public UUID criarUsuario(Cliente cliente, String senha) {
         try (Keycloak keycloak = getClient()) {
             UserRepresentation user = getUserRepresentation(cliente);
 
@@ -98,7 +98,7 @@ public class KeycloakSyncService {
                     // Definir senha separadamente
                     CredentialRepresentation credential = new CredentialRepresentation();
                     credential.setType(CredentialRepresentation.PASSWORD);
-                    credential.setValue(cliente.getSenha());
+                    credential.setValue(senha);
                     credential.setTemporary(false);
 
                     keycloak.realm(targetRealm).users().get(userId).resetPassword(credential);
