@@ -4,6 +4,7 @@ public class MensagemUtil {
 
     public static final String ID_VAZIO = "O id não pode ser vazio.";
     public static final String NAO_FOI_POSSIVEL_EXECUTAR_OPERACAO = "Não foi possível executar a operação.";
+    public static final String CLIENTE_NAO_ENCONTRADO = "Cliente não encontrado";
 
     public static final String CLIENTE_NULO = "Cliente não pode ser nulo";
     public static final String NOME_INVALIDO = "Nome inválido";

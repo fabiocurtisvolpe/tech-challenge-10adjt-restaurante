@@ -18,8 +18,6 @@ public class AtualizarClienteUseCase {
 
     public Cliente run(Cliente cliente) {
 
-        this.clientePort.obterPorId(cliente.getId());
-
         ClienteValidator.validarId(cliente);
         ClienteValidator.camposObrigatorio(cliente);
 

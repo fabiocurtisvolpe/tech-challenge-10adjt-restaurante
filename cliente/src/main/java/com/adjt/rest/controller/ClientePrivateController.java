@@ -45,7 +45,7 @@ public class ClientePrivateController {
 
         Cliente model = this.clienteRestMapper.toModel(request);
         Cliente resp = this.atualizarClienteUseCase.run(model);
-        this.keycloakSyncService.atualizarUsuario(model);
+        this.keycloakSyncService.atualizarUsuario(resp);
 
         ClienteResponse response = this.clienteRestMapper.toResponse(resp);
 

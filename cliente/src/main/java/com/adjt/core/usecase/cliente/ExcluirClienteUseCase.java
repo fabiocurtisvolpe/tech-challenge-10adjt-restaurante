@@ -14,7 +14,6 @@ public class ExcluirClienteUseCase {
     }
 
     public boolean run(Long id) {
-        this.clientePort.obterPorId(id);
         return clientePort.excluir(id);
     }
 }

@@ -9,19 +9,13 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class ObterPorEmailClienteUseCase {
 
-    private final UserContext userContext;
     private final ClientePort<Cliente> clientePort;
 
-    public ObterPorEmailClienteUseCase(ClientePort<Cliente> clientePort,
-                                       UserContext userContext) {
+    public ObterPorEmailClienteUseCase(ClientePort<Cliente> clientePort) {
         this.clientePort = clientePort;
-        this.userContext = userContext;
     }
 
     public Cliente run(String email) {
-        Cliente alvo = this.clientePort.obterPorEmail(email);
-        ClienteValidator.validarClienteLogado(alvo, userContext);
-
         return clientePort.obterPorEmail(email);
     }
 }

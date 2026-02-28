@@ -9,17 +9,13 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class ObterPorCpfClienteUseCase {
 
-    private final UserContext userContext;
     private final ClientePort<Cliente> clientePort;
 
-    public ObterPorCpfClienteUseCase(ClientePort<Cliente> clientePort, UserContext userContext) {
+    public ObterPorCpfClienteUseCase(ClientePort<Cliente> clientePort) {
         this.clientePort = clientePort;
-        this.userContext = userContext;
     }
 
     public Cliente run(String cpf) {
-        Cliente alvo = this.clientePort.obterPorCpf(cpf);
-        ClienteValidator.validarClienteLogado(alvo, userContext);
         return clientePort.obterPorCpf(cpf);
     }
 }

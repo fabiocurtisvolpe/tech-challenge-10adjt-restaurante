@@ -61,10 +61,6 @@ public class ClienteValidator {
         if (cliente.getSenha() == null || cliente.getSenha().trim().isEmpty()) {
             throw new NotificacaoException(MensagemUtil.SENHA_INVALIDO);
         }
-
-        if (cliente.getKeycloakId() == null) {
-            throw new NotificacaoException(MensagemUtil.UUID_CLIENTE);
-        }
     }
 
     private static boolean validarEmail(String email) {

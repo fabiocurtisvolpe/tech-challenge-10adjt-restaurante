@@ -7,6 +7,20 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class EnderecoMapper {
 
+    public void updateEntityFromModel(Endereco model, EnderecoEntity entity) {
+        if (model == null || entity == null) return;
+
+        entity.rua = model.getRua();
+        entity.bairro = model.getBairro();
+        entity.cep = model.getCep();
+        entity.complemento = model.getComplemento();
+        entity.numero = model.getNumero();
+        entity.cidade = model.getCidade();
+        entity.uf = model.getUf();
+        entity.principal = model.getPrincipal();
+        entity.observacao = model.getObservacao();
+    }
+
     public Endereco toModel(EnderecoSource source) {
         if (source == null) {
             return null;
