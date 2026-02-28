@@ -1,7 +1,5 @@
 package com.adjt.core.port;
 
-import java.util.UUID;
-
 public interface ClientePort<Cliente> {
 
     Cliente criar(Cliente model);

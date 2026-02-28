@@ -1,7 +1,6 @@
 package com.adjt.rest.controller;
 
 import com.adjt.core.model.Cliente;
-import com.adjt.core.usecase.cliente.AtualizarClienteUseCase;
 import com.adjt.core.usecase.cliente.CriarClienteUseCase;
 import com.adjt.rest.dto.request.ClienteRequest;
 import com.adjt.rest.dto.response.ClienteResponse;
