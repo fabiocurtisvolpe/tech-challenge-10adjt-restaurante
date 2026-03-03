@@ -7,6 +7,7 @@ public class MensagemUtil {
     public static final String NOME_MAXIMO_CARACTERES = "Nome deve ter no máximo 50 caracteres";
     public static final String NOME_MINIMO_CARACTERES = "Nome deve ter no mínimo 3 caracteres";
 
+    public static final String USUARIO_NAO_ENCONTRADO = "Usuário não encontrado";
     public static final String USUARIO_NULO = "Usuário não pode ser nulo";
     public static final String NOME_INVALIDO = "Nome inválido";
     public static final String CPF_INVALIDO = "Cpf inválido";
@@ -20,7 +21,6 @@ public class MensagemUtil {
     public static final String MUNICIPIO_INVALIDO = "O município é obrigatório";
     public static final String UF_OBRIGATORIO = "A UF é obrigatória";
     public static final String UF_INVALIDO = "A UF deve conter exatamente 2 letras";
-    public static final String PRINCIPAL_INVALIDO = "A definição se o endereço é principal é obrigatória";
 
     public static final String RESTAURANTE_OBRIGATORIO = "Restaurante é obrigatório";
     public static final String RESTAURANTE_JA_CADASTRADO = "Restaurante com esse nome já está cadastrado.";

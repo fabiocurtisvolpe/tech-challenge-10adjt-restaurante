@@ -17,7 +17,7 @@ import jakarta.ws.rs.core.Response;
 @RolesAllowed("ROLE_CLIENTE")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ClientePrivateController {
+public class UsuarioPrivateController {
 
     private final AtualizarUsuarioUseCase atualizarUsuarioUseCase;
     private final ObterPorIdUsuarioUseCase obterPorIdUsuarioUseCase;
@@ -25,7 +25,7 @@ public class ClientePrivateController {
 
     private final UsuarioRestMapper usuarioRestMapper;
 
-    public ClientePrivateController(AtualizarUsuarioUseCase atualizarUsuarioUseCase,
+    public UsuarioPrivateController(AtualizarUsuarioUseCase atualizarUsuarioUseCase,
                                     ObterPorIdUsuarioUseCase obterPorIdUsuarioUseCase,
                                     ExcluirUsuarioUseCase excluirUsuarioUseCase,
                                     UsuarioRestMapper usuarioRestMapper) {

@@ -10,9 +10,7 @@ public class MensagemUtil {
     public static final String NOME_INVALIDO = "Nome inválido";
     public static final String CPF_INVALIDO = "Cpf inválido";
     public static final String EMAIL_INVALIDO = "E-mail inválido";
-    public static final String SENHA_INVALIDO = "Senha inválida";
     public static final String ENDERECO_OBRIGATORIO = "Cliente precisa ter pelo menos um endereço";
-    public static final String UUID_CLIENTE = "UUID inválido";
 
     public static final String CEP_INVALIDO = "Cep inválido";
     public static final String RUA_INVALIDO = "O logradouro é obrigatório";

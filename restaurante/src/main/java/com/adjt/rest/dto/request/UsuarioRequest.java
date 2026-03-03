@@ -4,6 +4,7 @@ import com.adjt.data.mapper.UsuarioSource;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class UsuarioRequest implements UsuarioSource {
 
@@ -57,12 +58,17 @@ public class UsuarioRequest implements UsuarioSource {
     }
 
     @Override
-    public String getSenha() {
-        return senha;
+    public LocalDateTime getDtCadastro() {
+        return dtCadastro;
     }
 
     @Override
-    public LocalDateTime getDtCadastro() {
-        return dtCadastro;
+    public UUID getKeycloakId() {
+        return null;
+    }
+
+    @Override
+    public Long getPerfilId() {
+        return idPerfil;
     }
 }

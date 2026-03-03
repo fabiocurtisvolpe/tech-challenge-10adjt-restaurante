@@ -12,6 +12,7 @@ import org.hibernate.envers.Audited;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_usuario", uniqueConstraints = {
@@ -40,11 +41,6 @@ public class UsuarioEntity extends PanacheEntityBase implements UsuarioSource {
     @Column(length = 50, nullable = false)
     public String email;
 
-    @NotBlank
-    @Size(max = 255)
-    @Column(nullable = false)
-    public String senha;
-
     @CreationTimestamp
     @Column(name = "dt_cadastro", updatable = false, columnDefinition = "TIMESTAMP(6)")
     public LocalDateTime dtCadastro;
@@ -55,6 +51,9 @@ public class UsuarioEntity extends PanacheEntityBase implements UsuarioSource {
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     public List<RestauranteEntity> restaurantes = new ArrayList<>();
+
+    @Column(name = "keycloak_id", unique = true)
+    public UUID keycloakId;
 
     public void addRestaurante(RestauranteEntity restaurante) {
         restaurante.usuario = this;
@@ -82,12 +81,17 @@ public class UsuarioEntity extends PanacheEntityBase implements UsuarioSource {
     }
 
     @Override
-    public String getSenha() {
-        return senha;
+    public LocalDateTime getDtCadastro() {
+        return dtCadastro;
     }
 
     @Override
-    public LocalDateTime getDtCadastro() {
-        return dtCadastro;
+    public UUID getKeycloakId() {
+        return keycloakId;
+    }
+
+    @Override
+    public Long getPerfilId() {
+        return perfil.id;
     }
 }

@@ -5,6 +5,7 @@ import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @ApplicationScoped
 public class UsuarioRepository implements PanacheRepositoryBase<UsuarioEntity, Long> {
@@ -15,5 +16,9 @@ public class UsuarioRepository implements PanacheRepositoryBase<UsuarioEntity, L
 
     public Optional<UsuarioEntity> buscarPorEmail(String email) {
         return find("email", email).firstResultOptional();
+    }
+
+    public Optional<UsuarioEntity> buscarPorKeycloakId(UUID keycloakId) {
+        return find("keycloakId", keycloakId).firstResultOptional();
     }
 }
