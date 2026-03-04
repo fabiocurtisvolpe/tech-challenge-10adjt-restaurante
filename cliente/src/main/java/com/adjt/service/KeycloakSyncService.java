@@ -104,11 +104,21 @@ public class KeycloakSyncService {
                     keycloak.realm(targetRealm).users().get(userId).resetPassword(credential);
 
                     atribuirRole(keycloak, userId);
-                    LOG.infof("Usuário criado com sucesso no Keycloak: %s", cliente.getEmail());
+                    LOG.infof("Cliente criado com sucesso no Keycloak: %s", cliente.getEmail());
 
                     return UUID.fromString(userId);
 
-                } else {
+                }
+                else if (response.getStatus() == 409) {
+                    LOG.infof("Cliente %s já existe. Adicionando perfil de cliente...", cliente.getEmail());
+
+                    UserRepresentation existingUser = keycloak.realm(targetRealm).users()
+                            .search(cliente.getEmail(), true).getFirst();
+
+                    atribuirRole(keycloak, existingUser.getId());
+                    return UUID.fromString(existingUser.getId());
+                }
+                else {
 
                     String msg = "Erro ao criar usuário %s. Status: %d".formatted(cliente.getEmail(), response.getStatus());
                     LOG.error(msg);

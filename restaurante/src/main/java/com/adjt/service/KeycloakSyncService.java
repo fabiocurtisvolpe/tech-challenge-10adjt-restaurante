@@ -2,7 +2,6 @@ package com.adjt.service;
 
 import com.adjt.core.exception.NotificacaoException;
 import com.adjt.core.model.Usuario;
-import com.adjt.data.entity.PerfilEntity;
 import com.adjt.data.repository.jpa.PerfilRepository;
 import io.quarkus.runtime.StartupEvent;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -109,7 +108,17 @@ public class KeycloakSyncService {
 
                     return UUID.fromString(userId);
 
-                } else {
+                }
+                else if (response.getStatus() == 409) {
+                    LOG.infof("Usuário %s já existe. Adicionando perfil de restaurante...", usuario.getEmail());
+
+                    UserRepresentation existingUser = keycloak.realm(targetRealm).users()
+                            .search(usuario.getEmail(), true).getFirst();
+
+                    atribuirRole(keycloak, existingUser.getId(), usuario.getPerfil().getNome());
+                    return UUID.fromString(existingUser.getId());
+                }
+                else {
 
                     String msg = "Erro ao criar usuário %s. Status: %d".formatted(usuario.getEmail(), response.getStatus());
                     LOG.error(msg);
