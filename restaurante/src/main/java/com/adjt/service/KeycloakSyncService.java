@@ -104,9 +104,7 @@ public class KeycloakSyncService {
 
                     keycloak.realm(targetRealm).users().get(userId).resetPassword(credential);
 
-                    PerfilEntity perfil = this.perfilRepository.findById(usuario.getPerfil().getId());
-
-                    atribuirRole(keycloak, userId, perfil.nome);
+                    atribuirRole(keycloak, userId, usuario.getPerfil().getNome());
                     LOG.infof("Usuário criado com sucesso no Keycloak: %s", usuario.getEmail());
 
                     return UUID.fromString(userId);

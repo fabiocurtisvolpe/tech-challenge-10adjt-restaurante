@@ -21,8 +21,8 @@ public class PerfilRepositoryAdapter implements PerfilPort<Perfil> {
     }
 
     @Override
-    public Perfil obterPorNome(String nome) {
-        Optional<PerfilEntity> entity = this.perfilRepository.buscarPorNome(nome);
+    public Perfil obterPorId(Long id) {
+        Optional<PerfilEntity> entity = this.perfilRepository.buscarPorId(id);
         return entity.map(this.perfilMapper::toModel).orElse(null);
     }
 }

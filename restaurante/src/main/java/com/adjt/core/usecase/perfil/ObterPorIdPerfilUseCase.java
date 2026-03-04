@@ -5,16 +5,16 @@ import com.adjt.core.port.PerfilPort;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class ObterPorNomePerfilUseCase {
+public class ObterPorIdPerfilUseCase {
 
     private final PerfilPort<Perfil> perfilPort;
 
-    public ObterPorNomePerfilUseCase(PerfilPort<Perfil> perfilPort) {
+    public ObterPorIdPerfilUseCase(PerfilPort<Perfil> perfilPort) {
         this.perfilPort = perfilPort;
     }
 
-    public Perfil run(String nome) {
-        return perfilPort.obterPorNome(nome);
+    public Perfil run(Long id) {
+        return perfilPort.obterPorId(id);
     }
 
 }

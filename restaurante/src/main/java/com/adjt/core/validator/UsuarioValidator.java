@@ -49,10 +49,6 @@ public class UsuarioValidator {
         if (!validarEmail(usuario.getEmail())) {
             throw new NotificacaoException(MensagemUtil.EMAIL_INVALIDO);
         }
-
-        if (usuario.getSenha() == null || usuario.getSenha().trim().isEmpty()) {
-            throw new NotificacaoException(MensagemUtil.SENHA_INVALIDO);
-        }
     }
 
     private static boolean validarEmail(String email) {

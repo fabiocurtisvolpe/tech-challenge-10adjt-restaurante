@@ -13,8 +13,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/cliente-private")
-@RolesAllowed("ROLE_CLIENTE")
+@Path("/usuario-private")
+@RolesAllowed({"ROLE_DONO", "ROLE_FUNCIONARIO"})
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class UsuarioPrivateController {

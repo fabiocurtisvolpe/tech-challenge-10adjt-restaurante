@@ -12,4 +12,5 @@ public class PerfilRepository implements PanacheRepositoryBase<PerfilEntity, Lon
     public Optional<PerfilEntity> buscarPorNome(String nome) {
         return find("nome", nome).firstResultOptional();
     }
+    public Optional<PerfilEntity> buscarPorId(Long id) { return find("id", id).firstResultOptional();}
 }
