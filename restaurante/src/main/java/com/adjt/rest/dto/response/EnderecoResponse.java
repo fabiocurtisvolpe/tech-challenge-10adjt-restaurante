@@ -11,4 +11,5 @@ public class EnderecoResponse {
     public String cidade;
     public String uf;
     public String observacao;
+    public Long idRestaurante;
 }

@@ -67,20 +67,21 @@ public class RestauranteRestMapper {
         restaurante.nome = model.getNome();
         restaurante.descricao = model.getDescricao();
         restaurante.horarioFuncionamento = model.getHorarioFuncionamento();
+        restaurante.idDono = model.getDono().getId();
 
         if (model.getTipoCozinha() != null) {
             restaurante.tipoCozinha = tipoCozinhaMapper.toResponse(model.getTipoCozinha());
         }
 
-        if (model.getCardapios() != null) {
+        if (!model.getCardapios().isEmpty()) {
             restaurante.cardapios = model.getCardapios().stream()
-                    .map(cardapioMapper::toResponse)
+                    .map(cardapio -> cardapioMapper.toResponse(cardapio, model.getId()))
                     .collect(Collectors.toList());
         }
 
-        if (model.getEnderecos() != null) {
+        if (!model.getEnderecos().isEmpty()) {
             restaurante.enderecos = model.getEnderecos().stream()
-                    .map(enderecoMapper::toResponse)
+                    .map(endereco ->  enderecoMapper.toResponse(endereco, model.getId()))
                     .collect(Collectors.toList());
         }
 

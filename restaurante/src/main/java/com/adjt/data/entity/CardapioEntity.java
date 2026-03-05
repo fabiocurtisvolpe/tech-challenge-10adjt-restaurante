@@ -47,31 +47,31 @@ public class CardapioEntity extends PanacheEntityBase implements CardapioSource 
     
     @Override
     public Long getId() {
-        return 0L;
+        return id;
     }
 
     @Override
     public String getNome() {
-        return "";
+        return nome;
     }
 
     @Override
     public String getDescricao() {
-        return "";
+        return descricao;
     }
 
     @Override
     public BigDecimal getPreco() {
-        return null;
+        return preco;
     }
 
     @Override
     public String getFoto() {
-        return "";
+        return foto;
     }
 
     @Override
     public Boolean getDisponivel() {
-        return null;
+        return disponivel;
     }
 }

@@ -19,7 +19,7 @@ public class CardapioRestMapper {
         return cardapioMapper.toModel(request);
     }
 
-    public CardapioResponse toResponse(Cardapio model) {
+    public CardapioResponse toResponse(Cardapio model, Long idRestaurante) {
         if (model == null) {
             return null;
         }
@@ -31,7 +31,7 @@ public class CardapioRestMapper {
         response.preco = model.getPreco();
         response.foto = model.getFoto();
         response.disponivel = model.getDisponivel();
-        response.idRestaurante = model.getRestaurante().getId();
+        response.idRestaurante = idRestaurante;
 
         return response;
     }

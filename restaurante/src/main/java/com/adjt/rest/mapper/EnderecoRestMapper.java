@@ -20,7 +20,7 @@ public class EnderecoRestMapper {
         return enderecoMapper.toModel(request);
     }
 
-    public EnderecoResponse toResponse(Endereco model) {
+    public EnderecoResponse toResponse(Endereco model, Long idRestaurante) {
         if (model == null) {
             return null;
         }
@@ -35,6 +35,7 @@ public class EnderecoRestMapper {
         response.cidade = model.getCidade();
         response.uf = model.getUf();
         response.observacao = model.getObservacao();
+        response.idRestaurante = idRestaurante;
 
         return response;
     }

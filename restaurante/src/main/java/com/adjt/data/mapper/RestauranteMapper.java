@@ -7,6 +7,7 @@ import com.adjt.data.entity.RestauranteEntity;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -46,20 +47,20 @@ public class RestauranteMapper {
             restaurante.setDono(usuarioMapper.toModel(entity.usuario, false));
         }
 
-        if (entity.enderecos != null) {
+        if (!entity.enderecos.isEmpty()) {
             List<Endereco> enderecos = entity.enderecos.stream()
                     .map(enderecoMapper::toModel)
                     .collect(Collectors.toList());
             restaurante.setEnderecos(enderecos);
         }
 
-        if (entity.cardapios != null) {
+        if (!entity.cardapios.isEmpty()) {
             List<Cardapio> cardapios = entity.cardapios.stream()
+                    .filter(Objects::nonNull)
                     .map(cardapioMapper::toModel)
                     .collect(Collectors.toList());
             restaurante.setCardapios(cardapios);
         }
-
         return restaurante;
     }
 
