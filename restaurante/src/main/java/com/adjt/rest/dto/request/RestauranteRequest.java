@@ -20,7 +20,7 @@ public class RestauranteRequest {
     public String descricao;
 
     @NotNull(message = "O horário de funcionamento não pode estar em branco")
-    protected Map<String, DiaFuncionamento> horarioFuncionamento;
+    public Map<String, DiaFuncionamento> horarioFuncionamento;
 
     @NotNull(message = "O id tipo de cozinha não pode estar vazio")
     @Positive(message = "O id tipo de cozinha deve ser maior que zero")
@@ -33,6 +33,5 @@ public class RestauranteRequest {
     @NotEmpty(message = "O restaurante deve ter pelo um endereço")
     public List<EnderecoRequest> enderecos = new ArrayList<>();
 
-    @NotEmpty(message = "O restaurante deve ter pelo um cardápio")
     public List<CardapioRequest> cardapios = new ArrayList<>();
 }

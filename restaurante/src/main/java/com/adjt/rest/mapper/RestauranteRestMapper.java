@@ -35,6 +35,9 @@ public class RestauranteRestMapper {
         restaurante.setNome(request.nome);
         restaurante.setDescricao(request.descricao);
 
+        String horarioFuncionamento = HorarioFuncionamentoRestMapper.converterParaJson(request.horarioFuncionamento);
+        restaurante.setHorarioFuncionamento(horarioFuncionamento);
+
         if (request.enderecos != null) {
             List<Endereco> enderecos = request.enderecos.stream()
                     .map(enderecoMapper::toModel)
