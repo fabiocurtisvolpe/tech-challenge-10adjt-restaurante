@@ -79,7 +79,7 @@ public class RestauranteMapper {
             entity.tipoCozinha = tipoCozinhaMapper.toEntity(model.getTipoCozinha());
         }
 
-        if (model.getDono() != null) {
+        if (Objects.nonNull(model.getDono())) {
             entity.usuario = usuarioMapper.toEntity(model.getDono());
         }
 

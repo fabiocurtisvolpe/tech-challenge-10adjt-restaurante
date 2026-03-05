@@ -72,12 +72,6 @@ public class UsuarioMapper {
         entity.dtCadastro = model.getDtCadastro();
         entity.keycloakId = model.getKeycloakId();
 
-        if (model.getRestaurantes() != null) {
-            model.getRestaurantes().stream()
-                    .map(restauranteMapper::toEntity)
-                    .forEach(entity::addRestaurante);
-        }
-
         entity.perfil = perfilRepository.findById(model.getPerfil().getId());
 
         return entity;
