@@ -1,10 +1,13 @@
 package com.adjt.rest.mapper;
 
+import com.adjt.core.model.Cardapio;
+import com.adjt.core.model.Endereco;
 import com.adjt.core.model.Restaurante;
 import com.adjt.rest.dto.request.RestauranteRequest;
 import com.adjt.rest.dto.response.RestauranteResponse;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -31,6 +34,20 @@ public class RestauranteRestMapper {
         restaurante.setId(request.id);
         restaurante.setNome(request.nome);
         restaurante.setDescricao(request.descricao);
+
+        if (request.enderecos != null) {
+            List<Endereco> enderecos = request.enderecos.stream()
+                    .map(enderecoMapper::toModel)
+                    .collect(Collectors.toList());
+            restaurante.setEnderecos(enderecos);
+        }
+
+        if (request.cardapios != null) {
+            List<Cardapio> cardapios = request.cardapios.stream()
+                    .map(cardapioMapper::toModel)
+                    .collect(Collectors.toList());
+            restaurante.setCardapios(cardapios);
+        }
 
         return restaurante;
 

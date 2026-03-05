@@ -49,7 +49,7 @@ public class ClientePrivateController {
 
         ClienteResponse response = this.clienteRestMapper.toResponse(resp);
 
-        return Response.status(Response.Status.CREATED).entity(response).build();
+        return Response.ok(response).build();
     }
 
     @GET
@@ -59,7 +59,7 @@ public class ClientePrivateController {
         Cliente resp = this.obterPorIdClienteUseCase.run(id);
         ClienteResponse response = this.clienteRestMapper.toResponse(resp);
 
-        return Response.status(Response.Status.CREATED).entity(response).build();
+        return Response.ok(response).build();
     }
 
     @DELETE
@@ -67,9 +67,12 @@ public class ClientePrivateController {
     public Response excluir(@PathParam("id") @Valid Long id) {
         Cliente cliente = this.obterPorIdClienteUseCase.run(id);
 
-        Boolean resp = this.excluirClienteUseCase.run(id);
+        boolean resp = this.excluirClienteUseCase.run(id);
         this.keycloakSyncService.excluirUsuario(cliente.getEmail());
 
-        return Response.status(Response.Status.CREATED).entity(resp).build();
+        if (!resp) {
+            return Response.status(Response.Status.NOT_FOUND).build(); // 404
+        }
+        return Response.noContent().build(); // 204
     }
 }

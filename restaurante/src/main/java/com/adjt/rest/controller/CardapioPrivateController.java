@@ -7,18 +7,17 @@ import com.adjt.core.usecase.usuario.ObterPorIdUsuarioUseCase;
 import com.adjt.rest.dto.request.UsuarioRequest;
 import com.adjt.rest.dto.response.UsuarioResponse;
 import com.adjt.rest.mapper.UsuarioRestMapper;
-import com.adjt.service.KeycloakSyncService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/usuario-private")
-@RolesAllowed({"ROLE_DONO", "ROLE_FUNCIONARIO"})
+@Path("/cardapio-private")
+@RolesAllowed("ROLE_DONO")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class UsuarioPrivateController {
+public class CardapioPrivateController {
 
     private final AtualizarUsuarioUseCase atualizarUsuarioUseCase;
     private final ObterPorIdUsuarioUseCase obterPorIdUsuarioUseCase;
@@ -26,18 +25,14 @@ public class UsuarioPrivateController {
 
     private final UsuarioRestMapper usuarioRestMapper;
 
-    private final KeycloakSyncService keycloakSyncService;
-
-    public UsuarioPrivateController(AtualizarUsuarioUseCase atualizarUsuarioUseCase,
-                                    ObterPorIdUsuarioUseCase obterPorIdUsuarioUseCase,
-                                    ExcluirUsuarioUseCase excluirUsuarioUseCase,
-                                    UsuarioRestMapper usuarioRestMapper,
-                                    KeycloakSyncService keycloakSyncService) {
+    public CardapioPrivateController(AtualizarUsuarioUseCase atualizarUsuarioUseCase,
+                                     ObterPorIdUsuarioUseCase obterPorIdUsuarioUseCase,
+                                     ExcluirUsuarioUseCase excluirUsuarioUseCase,
+                                     UsuarioRestMapper usuarioRestMapper) {
         this.atualizarUsuarioUseCase = atualizarUsuarioUseCase;
         this.obterPorIdUsuarioUseCase = obterPorIdUsuarioUseCase;
         this.excluirUsuarioUseCase = excluirUsuarioUseCase;
         this.usuarioRestMapper = usuarioRestMapper;
-        this.keycloakSyncService = keycloakSyncService;
     }
 
     @PUT
@@ -47,7 +42,7 @@ public class UsuarioPrivateController {
         Usuario resp = this.atualizarUsuarioUseCase.run(model);
         UsuarioResponse response = this.usuarioRestMapper.toResponse(resp);
 
-        return Response.ok(response).build();
+        return Response.status(Response.Status.CREATED).entity(response).build();
     }
 
     @GET
@@ -57,20 +52,13 @@ public class UsuarioPrivateController {
         Usuario resp = this.obterPorIdUsuarioUseCase.run(id);
         UsuarioResponse response = this.usuarioRestMapper.toResponse(resp);
 
-        return Response.ok(response).build();
+        return Response.status(Response.Status.CREATED).entity(response).build();
     }
 
     @DELETE
     @Path("/{id}")
     public Response excluir(@PathParam("id") @Valid Long id) {
-        Usuario usuario = this.obterPorIdUsuarioUseCase.run(id);
-        boolean resp = this.excluirUsuarioUseCase.run(id);
-
-        this.keycloakSyncService.excluirUsuario(usuario.getEmail());
-
-        if (!resp) {
-            return Response.status(Response.Status.NOT_FOUND).build(); // 404
-        }
-        return Response.noContent().build(); // 204
+        Boolean resp = this.excluirUsuarioUseCase.run(id);
+        return Response.status(Response.Status.CREATED).entity(resp).build();
     }
 }

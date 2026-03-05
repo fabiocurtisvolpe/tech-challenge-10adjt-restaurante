@@ -34,5 +34,5 @@ public class RestauranteRequest {
     public List<EnderecoRequest> enderecos = new ArrayList<>();
 
     @NotEmpty(message = "O restaurante deve ter pelo um cardápio")
-    public List<CardapioRequest> cardapioRequests = new ArrayList<>();
+    public List<CardapioRequest> cardapios = new ArrayList<>();
 }
