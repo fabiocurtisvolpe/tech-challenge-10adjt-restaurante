@@ -1,4 +1,4 @@
-package com.adjt;
+package com.adjt.graphql;
 
 import io.quarkus.grpc.GrpcService;
 

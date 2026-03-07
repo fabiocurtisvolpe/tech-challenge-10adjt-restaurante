@@ -1,4 +1,4 @@
-package com.adjt;
+package com.adjt.graphql;
 
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.Description;

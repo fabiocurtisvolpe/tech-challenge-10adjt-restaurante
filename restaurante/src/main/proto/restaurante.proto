@@ -22,23 +22,6 @@ service TipoCozinhaService {
   rpc ListarTiposCozinha(ListarTiposCozinhaRequest) returns (ListarTiposCozinhaResponse);
 }
 
-// Messages para Perfil
-message Perfil {
-  int64 id = 1;
-  string nome = 2;
-}
-
-// Messages para Usuario
-message Usuario {
-  int64 id = 1;
-  string nome = 2;
-  string cpf = 3;
-  string email = 4;
-  string senha = 5;
-  int64 dt_cadastro = 6;
-  int64 id_perfil = 7;
-}
-
 // Messages para TipoCozinha
 message TipoCozinha {
   int64 id = 1;
@@ -92,9 +75,8 @@ message Restaurante {
   string descricao = 3;
   string horario_funcionamento = 4;
   int64 id_tipo_cozinha = 5;
-  int64 id_usuario = 6;
-  Endereco endereco = 7;
-  TipoCozinha tipo_cozinha = 8;
+  Endereco endereco = 6;
+  TipoCozinha tipo_cozinha = 7;
 }
 
 message ObterRestauranteRequest {
