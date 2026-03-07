@@ -27,9 +27,7 @@ message Cliente {
   string nome = 2;
   string cpf = 3;
   string email = 4;
-  string senha = 5;
-  google.protobuf.Timestamp dt_cadastro = 6;
-  repeated Endereco enderecos = 7; // Representa a lista de endereços (1:N)
+  repeated Endereco enderecos = 5; // Representa a lista de endereços (1:N)
 }
 
 // Mensagens de Requisição e Resposta
@@ -41,8 +39,17 @@ message ClienteListResponse {
   repeated Cliente clientes = 1;
 }
 
+message ClienteUpdateRequest {
+  int64 id = 1;
+  string nome = 2;
+  string cpf = 3;
+  string email = 4;
+  repeated Endereco enderecos = 5;
+}
+
 // Serviço gRPC
 service ClienteService {
-  // Buscar cliente por ID
+
   rpc BuscarPorId (ClienteIdRequest) returns (Cliente);
+  rpc Atualizar (ClienteUpdateRequest) returns (Cliente);
 }
