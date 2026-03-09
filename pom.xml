@@ -12,7 +12,6 @@
     <modules>
         <module>cliente</module>
         <module>entrega</module>
-        <module>pagamento</module>
         <module>pedido</module>
         <module>restaurante</module>
     </modules>

@@ -10,10 +10,12 @@
         <module name="pedido" />
         <module name="cliente" />
         <module name="entrega" />
-        <module name="pagamento" />
         <module name="restaurante" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="pagamento" target="25" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
