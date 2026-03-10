@@ -17,6 +17,7 @@
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.4</surefire-plugin.version>
 
+        <!-- JDK 25 Support -->
         <maven.compiler.source>25</maven.compiler.source>
         <maven.compiler.target>25</maven.compiler.target>
     </properties>
@@ -34,7 +35,7 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- Quarkus Core & REST -->
+        <!-- Core & REST (Reactive stack) -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-arc</artifactId>
@@ -54,7 +55,7 @@
             <artifactId>quarkus-grpc</artifactId>
         </dependency>
 
-        <!-- Database & Persistence -->
+        <!-- Persistence & Database -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-postgresql</artifactId>
@@ -72,7 +73,7 @@
             <artifactId>quarkus-hibernate-envers</artifactId>
         </dependency>
 
-        <!-- Flyway -->
+        <!-- Migrations -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-flyway</artifactId>
@@ -82,11 +83,12 @@
             <artifactId>flyway-database-postgresql</artifactId>
         </dependency>
 
-        <!-- Security -->
+        <!-- Security & Keycloak -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-oidc</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-keycloak-admin-resteasy-client</artifactId>
@@ -107,14 +109,13 @@
 
     <build>
         <plugins>
-            <!-- Plugin do Quarkus Único e Consolidado -->
             <plugin>
                 <groupId>${quarkus.platform.group-id}</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
                 <version>${quarkus.platform.version}</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <!-- Argumentos para o JDK 25 -->
+                    <!-- Flags necessárias para rodar no JDK 25 sem avisos de restrição -->
                     <jvmArgs>--enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow</jvmArgs>
                 </configuration>
                 <executions>
@@ -140,6 +141,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
                 <configuration>
+                    <!-- Repassando as flags do JDK 25 para o ambiente de testes unitários -->
                     <argLine>@{argLine} --enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow</argLine>
                     <systemPropertyVariables>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
@@ -160,6 +162,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <!-- Repassando as flags do JDK 25 para o ambiente de testes de integração -->
                     <argLine>@{argLine} --enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow</argLine>
                     <systemPropertyVariables>
                         <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>

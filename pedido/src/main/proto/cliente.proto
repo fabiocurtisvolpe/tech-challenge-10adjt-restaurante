@@ -35,21 +35,8 @@ message ClienteIdRequest {
   int64 id = 1;
 }
 
-message ClienteListResponse {
-  repeated Cliente clientes = 1;
-}
-
-message ClienteUpdateRequest {
-  int64 id = 1;
-  string nome = 2;
-  string cpf = 3;
-  string email = 4;
-  repeated Endereco enderecos = 5;
-}
-
 // Serviço gRPC
 service ClienteService {
 
   rpc BuscarPorId (ClienteIdRequest) returns (Cliente);
-  rpc Atualizar (ClienteUpdateRequest) returns (Cliente);
 }

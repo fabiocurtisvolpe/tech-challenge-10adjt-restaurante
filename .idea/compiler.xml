@@ -13,17 +13,23 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="cliente (1)" target="25" />
       <module name="entrega" target="25" />
       <module name="pagamento" target="25" />
+      <module name="pedido (1)" target="25" />
+      <module name="restaurante (1)" target="25" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="cliente" options="-parameters" />
+      <module name="cliente (1)" options="-parameters" />
       <module name="entrega" options="-parameters" />
       <module name="pagamento" options="-parameters" />
       <module name="pedido" options="-parameters" />
+      <module name="pedido (1)" options="-parameters" />
       <module name="restaurante" options="-parameters" />
+      <module name="restaurante (1)" options="-parameters" />
     </option>
   </component>
 </project>

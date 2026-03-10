@@ -1,8 +1,7 @@
 package com.adjt.gprc;
 
 import com.adjt.cliente.ClienteIdRequest;
-import com.adjt.cliente.ClienteUpdateRequest;
-import com.adjt.cliente.ClienteService; // ← interface gerada pelo Quarkus
+import com.adjt.cliente.ClienteService;
 import com.adjt.core.model.ClienteInfo;
 import com.adjt.gprc.mapper.ClientePedidoMapper;
 import io.quarkus.grpc.GrpcClient;
@@ -21,18 +20,6 @@ public class ClienteGrpcUseCase {
                 .build();
 
         return clienteService.buscarPorId(request)
-                .map(ClientePedidoMapper::toClienteInfo);
-    }
-
-    public Uni<ClienteInfo> atualizarCliente(ClienteInfo clienteInfo) {
-        ClienteUpdateRequest request = ClienteUpdateRequest.newBuilder()
-                .setId(clienteInfo.getId())
-                .setNome(clienteInfo.getNome())
-                .setCpf(clienteInfo.getCpf())
-                .setEmail(clienteInfo.getEmail())
-                .build();
-
-        return clienteService.atualizar(request)
                 .map(ClientePedidoMapper::toClienteInfo);
     }
 }
