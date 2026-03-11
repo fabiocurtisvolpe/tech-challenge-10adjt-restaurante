@@ -10,16 +10,9 @@ import "google/protobuf/empty.proto";
 service RestauranteService {
   rpc ObterRestaurante(ObterRestauranteRequest) returns (RestauranteResponse);
   rpc ListarRestaurantes(ListarRestaurantesRequest) returns (ListarRestaurantesResponse);
-}
 
-service CardapioService {
   rpc ObterItemCardapio(ObterItemCardapioRequest) returns (ItemCardapioResponse);
   rpc ListarItensCardapio(ListarItensCardapioRequest) returns (ListarItensCardapioResponse);
-}
-
-service TipoCozinhaService {
-  rpc ObterTipoCozinha(ObterTipoCozinhaRequest) returns (TipoCozinhaResponse);
-  rpc ListarTiposCozinha(ListarTiposCozinhaRequest) returns (ListarTiposCozinhaResponse);
 }
 
 // Messages para TipoCozinha
@@ -27,11 +20,6 @@ message TipoCozinha {
   int64 id = 1;
   string nome = 2;
   string descricao = 3;
-}
-
-message CriarTipoCozinhaRequest {
-  string nome = 1;
-  string descricao = 2;
 }
 
 message ObterTipoCozinhaRequest {

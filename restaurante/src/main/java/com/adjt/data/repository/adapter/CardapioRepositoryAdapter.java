@@ -9,6 +9,7 @@ import com.adjt.data.repository.jpa.CardapioRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 
 @ApplicationScoped
@@ -58,5 +59,23 @@ public class CardapioRepositoryAdapter implements CardapioPort<Cardapio> {
         CardapioEntity entity = this.repository.findById(id);
         if (entity != null) return mapper.toModel(entity);
         return null;
+    }
+
+    @Override
+    public List<Cardapio> listarPorRestaurante(Long idRestaurante, int page, int size, Boolean disponivel) {
+        StringBuilder query = new StringBuilder("restaurante.id = :idRestaurante");
+        io.quarkus.panache.common.Parameters params = io.quarkus.panache.common.Parameters.with("idRestaurante", idRestaurante);
+
+        if (disponivel != null) {
+            query.append(" and disponivel = :disponivel");
+            params.and("disponivel", disponivel);
+        }
+
+        return this.repository.find(query.toString(), params)
+                .page(page, size)
+                .list()
+                .stream()
+                .map(mapper::toModel)
+                .toList();
     }
 }

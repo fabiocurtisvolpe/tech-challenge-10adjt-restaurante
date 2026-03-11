@@ -137,4 +137,29 @@ public class RestauranteRepositoryAdapter implements RestaurantePort<Restaurante
         RestauranteEntity entity = this.repository.findById(id);
         return mapper.toModel(entity);
     }
+
+    @Override
+    public List<Restaurante> listar(int page, int size, Long idTipoCozinha, String nome) {
+        StringBuilder query = new StringBuilder("1=1");
+
+        // Construção dinâmica de HQL
+        java.util.Map<String, Object> params = new java.util.HashMap<>();
+
+        if (idTipoCozinha != null) {
+            query.append(" and tipoCozinha.id = :idTipoCozinha");
+            params.put("idTipoCozinha", idTipoCozinha);
+        }
+
+        if (nome != null && !nome.isEmpty()) {
+            query.append(" and nome ilike :nome"); // ilike para busca case-insensitive no Postgres
+            params.put("nome", "%" + nome + "%");
+        }
+
+        return this.repository.find(query.toString(), params)
+                .page(page, size)
+                .list()
+                .stream()
+                .map(mapper::toModel)
+                .toList();
+    }
 }
