@@ -4,8 +4,7 @@ option java_multiple_files = true;
 option java_package = "com.adjt.cliente";
 option java_outer_classname = "ClienteProto";
 
-import "google/protobuf/timestamp.proto";
-import "google/protobuf/empty.proto";
+package cliente;
 
 // Definição do Endereço
 message Endereco {
