@@ -1,6 +1,6 @@
 package com.adjt.core.port;
 
-import java.util.List;
+import com.adjt.core.model.RestaurantePaginado;
 
 public interface RestaurantePort<Restaurante> {
 
@@ -8,5 +8,5 @@ public interface RestaurantePort<Restaurante> {
     Restaurante atualizar(Restaurante model);
     Boolean excluir(Long id);
     Restaurante obterPorId(Long id);
-    List<Restaurante> listar(int page, int size, Long idTipoCozinha, String nome);
+    RestaurantePaginado listar(int page, int size, Long idTipoCozinha, String nome);
 }

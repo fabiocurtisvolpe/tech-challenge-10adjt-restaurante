@@ -3,6 +3,7 @@ package com.adjt.data.repository.adapter;
 import com.adjt.core.model.Cardapio;
 import com.adjt.core.model.Endereco;
 import com.adjt.core.model.Restaurante;
+import com.adjt.core.model.RestaurantePaginado;
 import com.adjt.core.port.RestaurantePort;
 import com.adjt.core.util.MensagemUtil;
 import com.adjt.data.entity.CardapioEntity;
@@ -16,7 +17,9 @@ import com.adjt.data.repository.jpa.TipoCozinhaRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @ApplicationScoped
@@ -139,27 +142,25 @@ public class RestauranteRepositoryAdapter implements RestaurantePort<Restaurante
     }
 
     @Override
-    public List<Restaurante> listar(int page, int size, Long idTipoCozinha, String nome) {
+    public RestaurantePaginado listar(int page, int size, Long idTipoCozinha, String nome) {
         StringBuilder query = new StringBuilder("1=1");
-
-        // Construção dinâmica de HQL
-        java.util.Map<String, Object> params = new java.util.HashMap<>();
+        Map<String, Object> params = new HashMap<>();
 
         if (idTipoCozinha != null) {
             query.append(" and tipoCozinha.id = :idTipoCozinha");
             params.put("idTipoCozinha", idTipoCozinha);
         }
-
         if (nome != null && !nome.isEmpty()) {
-            query.append(" and nome ilike :nome"); // ilike para busca case-insensitive no Postgres
+            query.append(" and nome ilike :nome");
             params.put("nome", "%" + nome + "%");
         }
 
-        return this.repository.find(query.toString(), params)
-                .page(page, size)
-                .list()
-                .stream()
-                .map(mapper::toModel)
-                .toList();
+        var panacheQuery = this.repository.find(query.toString(), params);
+        long total = panacheQuery.count();
+
+        List<Restaurante> lista = panacheQuery.page(page, size).list()
+                .stream().map(mapper::toModel).toList();
+
+        return new RestaurantePaginado(lista, total);
     }
 }

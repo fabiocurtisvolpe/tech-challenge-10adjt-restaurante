@@ -1,7 +1,7 @@
 package com.adjt.gprc.mapper;
 
-import com.adjt.core.model.ClienteInfo;
 import com.adjt.cliente.Cliente;
+import com.adjt.core.model.ClienteInfo;
 
 public class ClientePedidoMapper {
 

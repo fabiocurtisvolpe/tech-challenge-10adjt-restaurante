@@ -1,6 +1,6 @@
 package com.adjt.core.port;
 
-import java.util.List;
+import com.adjt.core.model.CardapioPaginado;
 
 public interface CardapioPort<Cardapio> {
 
@@ -8,5 +8,5 @@ public interface CardapioPort<Cardapio> {
     Cardapio atualizar(Cardapio model);
     Boolean excluir(Long id);
     Cardapio obterPorId(Long id);
-    List<Cardapio> listarPorRestaurante(Long idRestaurante, int page, int size, Boolean disponivel);
+    CardapioPaginado listarPorRestaurante(Long idRestaurante, int page, int size, Boolean disponivel);
 }

@@ -41,17 +41,27 @@ public class RestauranteGrpcService extends MutinyRestauranteServiceGrpc.Restaur
     @Override
     @RunOnVirtualThread
     public Uni<ListarRestaurantesResponse> listarRestaurantes(ListarRestaurantesRequest request) {
-        return Uni.createFrom()
-                .item(() -> restauranteAdapter.listar(
-                        request.getPage(),
-                        request.getSize(),
-                        request.hasIdTipoCozinha() ? request.getIdTipoCozinha() : null,
-                        request.hasNome() ? request.getNome() : null
-                ))
-                .onItem().ifNotNull().transform(RestauranteGrpcMapper::toProtoListResponse)
-                .onFailure().transform(e ->
-                        Status.INTERNAL.withDescription(e.getMessage()).asRuntimeException()
-                );
+        return Uni.createFrom().item(() -> {
+
+            Long idTipoCozinha = request.hasIdTipoCozinha() ? request.getIdTipoCozinha() : null;
+            String nome = request.hasNome() ? request.getNome() : null;
+
+            var resultado = restauranteAdapter.listar(
+                    request.getPage(),
+                    request.getSize(),
+                    idTipoCozinha,
+                    nome
+            );
+
+            var listaProto = resultado.restaurantes().stream()
+                    .map(RestauranteGrpcMapper::toProtoResponse)
+                    .toList();
+
+            return ListarRestaurantesResponse.newBuilder()
+                    .addAllRestaurantes(listaProto)
+                    .setTotal((int) resultado.total())
+                    .build();
+        });
     }
 
     @Override

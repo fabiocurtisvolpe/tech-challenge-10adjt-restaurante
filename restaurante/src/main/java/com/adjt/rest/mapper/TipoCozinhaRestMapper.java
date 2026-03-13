@@ -1,6 +1,5 @@
 package com.adjt.rest.mapper;
 
-import com.adjt.core.model.Cardapio;
 import com.adjt.core.model.TipoCozinha;
 import com.adjt.data.mapper.TipoCozinhaMapper;
 import com.adjt.rest.dto.request.TipoCozinhaRequest;

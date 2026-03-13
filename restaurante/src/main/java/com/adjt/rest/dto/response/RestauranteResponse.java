@@ -1,10 +1,7 @@
 package com.adjt.rest.dto.response;
 
-import com.adjt.rest.dto.DiaFuncionamento;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class RestauranteResponse {
 

@@ -5,7 +5,6 @@ import com.adjt.data.mapper.EnderecoMapper;
 import com.adjt.rest.dto.request.EnderecoRequest;
 import com.adjt.rest.dto.response.EnderecoResponse;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class EnderecoRestMapper {

@@ -1,10 +1,10 @@
 package com.adjt.gprc.interceptor;
 
 import io.grpc.*;
+import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.eclipse.microprofile.jwt.JsonWebToken;
-import io.quarkus.security.identity.SecurityIdentity;
 
 @ApplicationScoped
 @io.quarkus.grpc.GlobalInterceptor

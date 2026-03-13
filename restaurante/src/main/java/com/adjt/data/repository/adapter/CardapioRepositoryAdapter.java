@@ -1,11 +1,13 @@
 package com.adjt.data.repository.adapter;
 
 import com.adjt.core.model.Cardapio;
+import com.adjt.core.model.CardapioPaginado;
 import com.adjt.core.port.CardapioPort;
 import com.adjt.core.util.MensagemUtil;
 import com.adjt.data.entity.CardapioEntity;
 import com.adjt.data.mapper.CardapioMapper;
 import com.adjt.data.repository.jpa.CardapioRepository;
+import io.quarkus.panache.common.Parameters;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
@@ -62,20 +64,21 @@ public class CardapioRepositoryAdapter implements CardapioPort<Cardapio> {
     }
 
     @Override
-    public List<Cardapio> listarPorRestaurante(Long idRestaurante, int page, int size, Boolean disponivel) {
+    public CardapioPaginado listarPorRestaurante(Long idRestaurante, int page, int size, Boolean disponivel) {
         StringBuilder query = new StringBuilder("restaurante.id = :idRestaurante");
-        io.quarkus.panache.common.Parameters params = io.quarkus.panache.common.Parameters.with("idRestaurante", idRestaurante);
+        Parameters params = Parameters.with("idRestaurante", idRestaurante);
 
         if (disponivel != null) {
             query.append(" and disponivel = :disponivel");
             params.and("disponivel", disponivel);
         }
 
-        return this.repository.find(query.toString(), params)
-                .page(page, size)
-                .list()
-                .stream()
-                .map(mapper::toModel)
-                .toList();
+        var panacheQuery = this.repository.find(query.toString(), params);
+        long total = panacheQuery.count();
+
+        List<Cardapio> lista = panacheQuery.page(page, size).list()
+                .stream().map(mapper::toModel).toList();
+
+        return new CardapioPaginado(lista, total);
     }
 }
