@@ -15,6 +15,14 @@ public class CardapioInfo implements Serializable {
 
     public CardapioInfo() {}
 
+    public CardapioInfo(long id, String nome, String descricao, String preco, String foto) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.preco = new BigDecimal(preco);
+        this.foto = foto;
+    }
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

@@ -1,15 +1,9 @@
 package com.adjt.gprc;
 
-import com.adjt.cliente.ClienteIdRequest;
 import com.adjt.core.model.CardapioInfo;
-import com.adjt.core.model.ClienteInfo;
 import com.adjt.core.model.RestauranteInfo;
-import com.adjt.gprc.mapper.ClientePedidoMapper;
 import com.adjt.gprc.mapper.RestaurantePedidoMapper;
-import com.adjt.restaurante.ListarRestaurantesRequest;
-import com.adjt.restaurante.ObterItemCardapioRequest;
-import com.adjt.restaurante.ObterRestauranteRequest;
-import com.adjt.restaurante.RestauranteService;
+import com.adjt.restaurante.*;
 import io.quarkus.grpc.GrpcClient;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -57,12 +51,18 @@ public class RestauranteGrpcUseCase {
                 .map(RestaurantePedidoMapper::toCardapioInfo);
     }
 
-    public Uni<ClienteInfo> listarItensCardapio(Long id) {
-        ClienteIdRequest request = ClienteIdRequest.newBuilder()
-                .setId(id)
+    public Uni<List<CardapioInfo>> listarItensCardapio(int page, int size, long idRestaurante, boolean disponivel) {
+        ListarItensCardapioRequest request = ListarItensCardapioRequest.newBuilder()
+                .setPage(page)
+                .setSize(size)
+                .setDisponivel(disponivel)
+                .setIdRestaurante(idRestaurante)
                 .build();
 
-        return clienteService.buscarPorId(request)
-                .map(ClientePedidoMapper::toClienteInfo);
+        return restauranteService.listarItensCardapio(request)
+                .map(response -> response.getItensList().stream()
+                        .map(r -> new CardapioInfo(r.getId(), r.getNome(), r.getDescricao(), r.getPreco(), r.getFoto()))
+                        .collect(Collectors.toList())
+                );
     }
 }
