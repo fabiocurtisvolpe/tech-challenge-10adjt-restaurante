@@ -80,16 +80,22 @@ public class RestauranteGrpcService extends MutinyRestauranteServiceGrpc.Restaur
     @Override
     @RunOnVirtualThread
     public Uni<ListarItensCardapioResponse> listarItensCardapio(ListarItensCardapioRequest request) {
-        return Uni.createFrom()
-                .item(() -> cardapioAdapter.listarPorRestaurante(
-                        request.getIdRestaurante(),
-                        request.getPage(),
-                        request.getSize(),
-                        request.hasDisponivel() ? request.getDisponivel() : null
-                ))
-                .onItem().ifNotNull().transform(RestauranteGrpcMapper::toProtoListCardapioResponse)
-                .onFailure().transform(e ->
-                        Status.INTERNAL.withDescription(e.getMessage()).asRuntimeException()
-                );
+
+        return Uni.createFrom().item(() -> {
+
+            long idRestaurante = request.getIdRestaurante();
+            boolean disponivel = request.getDisponivel();
+
+            var resultado = cardapioAdapter.listarPorRestaurante(idRestaurante, request.getPage(), request.getSize(), disponivel);
+
+            var listaProto = resultado.cardapios().stream()
+                    .map(RestauranteGrpcMapper::toProtoItemResponse)
+                    .toList();
+
+            return ListarItensCardapioResponse.newBuilder()
+                    .addAllItens(listaProto)
+                    .setTotal((int) resultado.total())
+                    .build();
+        });
     }
 }
