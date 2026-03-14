@@ -4,7 +4,9 @@ import com.adjt.core.model.ClienteInfo;
 import com.adjt.gprc.ClienteGrpcUseCase;
 import io.smallrye.mutiny.Uni;
 import jakarta.annotation.security.RolesAllowed;
+import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.GraphQLApi;
+import org.eclipse.microprofile.graphql.Name;
 import org.eclipse.microprofile.graphql.Query;
 
 @GraphQLApi
@@ -18,7 +20,8 @@ public class ClienteResource {
     }
 
     @Query("buscarCliente")
-    public Uni<ClienteInfo> buscarCliente(Long id) {
+    @Description("Busca os detalhes de um cliente específico")
+    public Uni<ClienteInfo> buscarCliente(@Name("id") Long id) {
         return clienteGrpcUseCase.buscarClientePorId(id);
     }
 }
