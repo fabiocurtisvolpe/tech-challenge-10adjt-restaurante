@@ -50,7 +50,6 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
             default -> createResponse(Response.Status.INTERNAL_SERVER_ERROR, "Internal Server Error",
                     "An unexpected error occurred: " + exception.getMessage());
         };
-
     }
 
     private Response createResponse(Response.Status status, String error, String message) {

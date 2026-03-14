@@ -36,28 +36,21 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
     public Response toResponse(Throwable exception) {
         LOG.error("Exceção capturada: " + exception.getMessage(), exception);
 
-        if (exception instanceof NotificacaoException) {
-            return createResponse(Response.Status.BAD_REQUEST, "Bad Request", exception.getMessage());
-        }
+        return switch (exception) {
+            case NotificacaoException _ ->
+                    createResponse(Response.Status.BAD_REQUEST, "Bad Request", exception.getMessage());
+            case IllegalArgumentException _ ->
+                    createResponse(Response.Status.BAD_REQUEST, "Invalid Argument", exception.getMessage());
+            case ConstraintViolationException constraintViolationException ->
+                    handleConstraintViolation(constraintViolationException);
+            case UnauthorizedException _ ->
+                    createResponse(Response.Status.UNAUTHORIZED, "Unauthorized", "Credenciais inválidas");
+            case ForbiddenException _ ->
+                    createResponse(Response.Status.FORBIDDEN, "Forbidden", "Acesso negado");
+            default -> createResponse(Response.Status.INTERNAL_SERVER_ERROR, "Internal Server Error",
+                    "An unexpected error occurred: " + exception.getMessage());
+        };
 
-        if (exception instanceof IllegalArgumentException) {
-            return createResponse(Response.Status.BAD_REQUEST, "Invalid Argument", exception.getMessage());
-        }
-
-        if (exception instanceof ConstraintViolationException) {
-            return handleConstraintViolation((ConstraintViolationException) exception);
-        }
-
-        if (exception instanceof UnauthorizedException) {
-            return createResponse(Response.Status.UNAUTHORIZED, "Unauthorized", "Credenciais inválidas");
-        }
-
-        if (exception instanceof ForbiddenException) {
-            return createResponse(Response.Status.FORBIDDEN, "Forbidden", "Acesso negado");
-        }
-
-        return createResponse(Response.Status.INTERNAL_SERVER_ERROR, "Internal Server Error",
-                "An unexpected error occurred: " + exception.getMessage());
     }
 
     private Response createResponse(Response.Status status, String error, String message) {
