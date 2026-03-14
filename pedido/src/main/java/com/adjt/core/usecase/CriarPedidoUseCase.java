@@ -5,6 +5,8 @@ import com.adjt.core.port.PedidoPort;
 import com.adjt.core.validator.PedidoValidator;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.math.BigDecimal;
+
 @ApplicationScoped
 public class CriarPedidoUseCase {
 
@@ -16,6 +18,16 @@ public class CriarPedidoUseCase {
 
     public Pedido run(Pedido pedido) {
         PedidoValidator.validar(pedido);
+
+        BigDecimal total = pedido.getItens().stream()
+                .map(item -> {
+                    BigDecimal qtd = BigDecimal.valueOf(item.getQtd());
+                    return item.getValor().multiply(qtd);
+                })
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        pedido.setValorTotal(total);
+
         return pedidoPort.criar(pedido);
     }
 }

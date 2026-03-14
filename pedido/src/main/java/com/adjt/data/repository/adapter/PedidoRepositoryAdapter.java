@@ -1,7 +1,9 @@
 package com.adjt.data.repository.adapter;
 
+import com.adjt.core.exception.NotificacaoException;
 import com.adjt.core.model.Pedido;
 import com.adjt.core.port.PedidoPort;
+import com.adjt.core.util.MensagemUtil;
 import com.adjt.data.entity.PedidoEntity;
 import com.adjt.data.mapper.PedidoMapper;
 import com.adjt.data.repository.jpa.PedidoRepository;
@@ -41,5 +43,9 @@ public class PedidoRepositoryAdapter implements PedidoPort<Pedido> {
             return mapper.toModel(entity);
         }
         return null;
+    }
+
+    private void validarUsuarioLogado(Long id) {
+
     }
 }

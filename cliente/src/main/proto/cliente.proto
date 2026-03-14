@@ -34,8 +34,19 @@ message ClienteIdRequest {
   int64 id = 1;
 }
 
+message ValidarUsuarioRequest {
+  string uid = 1;
+  int64 id = 2;
+}
+
+message ValidarUsuarioResponse {
+  bool valido = 1;
+}
+
+
 // Serviço gRPC
 service ClienteService {
 
   rpc BuscarPorId (ClienteIdRequest) returns (Cliente);
+  rpc ValidarUsuarioLogado (ValidarUsuarioRequest) returns (ValidarUsuarioResponse);
 }
