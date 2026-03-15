@@ -1,6 +1,5 @@
 package com.adjt.data.repository.adapter;
 
-import com.adjt.core.exception.NotificacaoException;
 import com.adjt.core.model.Pedido;
 import com.adjt.core.port.PedidoPort;
 import com.adjt.core.util.MensagemUtil;
@@ -9,6 +8,8 @@ import com.adjt.data.mapper.PedidoMapper;
 import com.adjt.data.repository.jpa.PedidoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+
+import java.util.Objects;
 
 @ApplicationScoped
 public class PedidoRepositoryAdapter implements PedidoPort<Pedido> {
@@ -45,7 +46,13 @@ public class PedidoRepositoryAdapter implements PedidoPort<Pedido> {
         return null;
     }
 
-    private void validarUsuarioLogado(Long id) {
+    @Transactional
+    @Override
+    public Pedido atualizar(Long id, Integer statusCode) {
+        PedidoEntity entity = this.repository.findById(id);
+        Objects.requireNonNull(entity, MensagemUtil.NAO_FOI_POSSIVEL_EXECUTAR_OPERACAO);
 
+        entity.statusCode = statusCode;
+        return mapper.toModel(entity);
     }
 }

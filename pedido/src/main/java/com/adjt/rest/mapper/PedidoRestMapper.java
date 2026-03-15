@@ -46,7 +46,7 @@ public class PedidoRestMapper {
         response.idRestaurante = model.getIdRestaurante();
         response.valorTotal = model.getValorTotal();
 
-        response.pgtoEfetuado = model.getStatusCode() != null && model.getStatusCode() == 200;
+        response.pgtoEfetuado = model.getStatusCode() != null && model.getStatusCode() == 201;
 
         if (model.getItens() != null) {
             response.itens = new ArrayList<>(model.getItens());
