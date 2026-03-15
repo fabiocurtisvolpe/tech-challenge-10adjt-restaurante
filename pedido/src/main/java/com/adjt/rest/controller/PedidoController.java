@@ -67,7 +67,7 @@ public class PedidoController {
    }
 
    @GET
-   @Path("/{id}")
+   @Path("obter/{id}")
    public Response obter(@PathParam("id") Long id) {
       Pedido pedido = this.obterPedidoUseCase.run(id);
       PedidoResponse response = this.pedidoRestMapper.toResponse(pedido);
@@ -76,7 +76,7 @@ public class PedidoController {
    }
 
    @DELETE
-   @Path("/{id}")
+   @Path("cancelar/{id}")
    public Response cancelar(@PathParam("id") Long id) {
       this.cancelarPedidoUseCase.run(id);
       return Response.noContent().build();

@@ -73,6 +73,18 @@
             <artifactId>quarkus-keycloak-admin-resteasy-client</artifactId>
         </dependency>
 
+        <!-- Servidor REST Reativo (Necessário para processar @Path) -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest</artifactId>
+        </dependency>
+
+        <!-- Suporte a JSON para o REST (Necessário para @Produces/@Consumes JSON) -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest-jackson</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit</artifactId>

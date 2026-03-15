@@ -6,6 +6,7 @@ import com.adjt.core.validator.PedidoValidator;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @ApplicationScoped
 public class CriarPedidoUseCase {
@@ -19,6 +20,7 @@ public class CriarPedidoUseCase {
     public Pedido run(Pedido pedido) {
         PedidoValidator.validar(pedido);
 
+        pedido.setDtCadastro(LocalDateTime.now());
         BigDecimal total = pedido.getItens().stream()
                 .map(item -> {
                     BigDecimal qtd = BigDecimal.valueOf(item.getQtd());

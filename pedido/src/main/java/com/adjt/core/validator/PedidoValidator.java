@@ -10,9 +10,6 @@ import java.util.List;
 public class PedidoValidator {
 
     public static void validar(Pedido pedido) {
-        if (pedido.getDtCadastro() == null) {
-            throw new IllegalArgumentException(MensagemUtil.DATA_CADASTRO_OBRIGATORIA);
-        }
 
         if (pedido.getIdCliente() == null) {
             throw new IllegalArgumentException(MensagemUtil.CLIENTE_OBRIGATORIO);
