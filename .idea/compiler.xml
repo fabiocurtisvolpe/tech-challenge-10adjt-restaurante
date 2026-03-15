@@ -9,13 +9,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="pedido" />
         <module name="cliente" />
+        <module name="pagamento" />
         <module name="restaurante" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="cliente (1)" target="25" />
       <module name="entrega" target="25" />
-      <module name="pagamento" target="25" />
       <module name="pedido (1)" target="25" />
       <module name="restaurante (1)" target="25" />
     </bytecodeTargetLevel>
