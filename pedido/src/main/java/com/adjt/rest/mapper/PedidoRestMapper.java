@@ -2,6 +2,7 @@ package com.adjt.rest.mapper;
 
 import com.adjt.core.model.ItemPedido;
 import com.adjt.core.model.Pedido;
+import com.adjt.core.model.StatusPagamento;
 import com.adjt.rest.dto.request.ItemPedidoRequest;
 import com.adjt.rest.dto.request.PedidoRequest;
 import com.adjt.rest.dto.response.PedidoResponse;
@@ -46,7 +47,8 @@ public class PedidoRestMapper {
         response.idRestaurante = model.getIdRestaurante();
         response.valorTotal = model.getValorTotal();
 
-        response.pgtoEfetuado = model.getStatusCode() != null && model.getStatusCode() == 201;
+        StatusPagamento status = StatusPagamento.fromHttpStatus(model.getStatusCode());
+        response.pgtoEfetuado = status == StatusPagamento.APROVADO;
 
         if (model.getItens() != null) {
             response.itens = new ArrayList<>(model.getItens());

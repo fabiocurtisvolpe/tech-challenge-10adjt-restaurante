@@ -1,8 +1,9 @@
-package restclient;
+package com.adjt.pagamento.infra.gateway.client;
 
-import dto.RequisicaoPagamentoDTO;import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
+import com.adjt.pagamento.infra.gateway.dto.RequisicaoPagamentoDTO;
 import io.smallrye.mutiny.Uni;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 

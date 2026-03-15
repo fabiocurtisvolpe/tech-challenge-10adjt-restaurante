@@ -1,11 +1,11 @@
-package com.adjt.rest.receptor;
+package com.adjt.messaging;
 
 import com.adjt.core.usecase.AtualizarPedidoUseCase;
 import com.adjt.rest.event.PagamentoResultadoEvent;
 import io.vertx.core.json.JsonObject;
-import org.eclipse.microprofile.reactive.messaging.Incoming;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.jboss.logging.Logger;
 
 @ApplicationScoped

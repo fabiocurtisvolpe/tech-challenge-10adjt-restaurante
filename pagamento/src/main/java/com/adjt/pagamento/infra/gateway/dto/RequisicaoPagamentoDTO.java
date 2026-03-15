@@ -1,4 +1,4 @@
-package dto;
+package com.adjt.pagamento.infra.gateway.dto;
 
 public class RequisicaoPagamentoDTO {
     public Long valor;

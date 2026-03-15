@@ -1,15 +1,18 @@
-package restclient;
+package com.adjt.pagamento.infra.gateway.service;
 
-import dto.RequisicaoPagamentoDTO;
+import com.adjt.pagamento.core.model.StatusPagamento;
+import com.adjt.pagamento.infra.gateway.client.PagamentoRestClient;
+import com.adjt.pagamento.infra.gateway.dto.RequisicaoPagamentoDTO;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.logging.Logger;
-import jakarta.ws.rs.core.Response;
+
 @ApplicationScoped
 public class PagamentoService {
 
@@ -32,7 +35,7 @@ public class PagamentoService {
         return restClient.enviarPagamento(dto)
                 .onItem().invoke(resp -> LOG.infof("Resposta do pagamento: %d", resp.getStatus()))
                 .onItem().transformToUni(resp -> {
-                    if (resp.getStatus() != 201) {
+                    if (resp.getStatus() != StatusPagamento.APROVADO.getHttpStatus()) {
                         return Uni.createFrom().failure(
                                 new RuntimeException("Serviço de pagamento retornou: " + resp.getStatus())
                         );
@@ -43,6 +46,8 @@ public class PagamentoService {
 
     public Uni<Response> fallbackPagamento(Long valor, String pedidoId, String clienteId) {
         LOG.errorf("#### FALLBACK ATIVADO #### Serviço indisponível para o pedido %s.", pedidoId);
-        return Uni.createFrom().item(Response.status(503).entity("Pagamento movido para processamento assíncrono (Pendente)").build());
+        return Uni.createFrom().item(
+                Response.status(StatusPagamento.SERVICO_INDISPONIVEL.getHttpStatus()).build()
+        );
     }
 }

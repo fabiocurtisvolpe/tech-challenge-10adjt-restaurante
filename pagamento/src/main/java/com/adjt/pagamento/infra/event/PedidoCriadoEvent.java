@@ -1,4 +1,4 @@
-package event;
+package com.adjt.pagamento.infra.event;
 
 import java.math.BigDecimal;
 
