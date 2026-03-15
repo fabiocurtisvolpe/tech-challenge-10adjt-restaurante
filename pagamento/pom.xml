@@ -3,22 +3,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.adjt</groupId>
-    <artifactId>pedido</artifactId>
+    <artifactId>pagamento</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>quarkus</packaging>
 
     <properties>
-        <compiler-plugin.version>3.14.1</compiler-plugin.version>
+        <compiler-plugin.version>3.15.0</compiler-plugin.version>
+        <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.31.4</quarkus.platform.version>
+        <quarkus.platform.version>3.32.3</quarkus.platform.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.4</surefire-plugin.version>
-
-        <maven.compiler.source>25</maven.compiler.source>
-        <maven.compiler.target>25</maven.compiler.target>
     </properties>
 
     <dependencyManagement>
@@ -34,45 +32,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-grpc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-flyway</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-hibernate-validator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-graphql</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-hibernate-envers</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jdbc-postgresql</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-arc</artifactId>
-        </dependency>
-
-        <!-- Security -->
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-oidc</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-keycloak-admin-rest-client</artifactId>
-        </dependency>
 
         <!-- Servidor REST Reativo (Necessário para processar @Path) -->
         <dependency>
@@ -99,14 +58,14 @@
 
         <dependency>
             <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-arc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-hibernate-orm-panache</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -116,18 +75,6 @@
                 <artifactId>quarkus-maven-plugin</artifactId>
                 <version>${quarkus.platform.version}</version>
                 <extensions>true</extensions>
-                <configuration>
-                    <jvmArgs>--enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow</jvmArgs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>build</goal>
-                            <goal>generate-code</goal>
-                            <goal>generate-code-tests</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
