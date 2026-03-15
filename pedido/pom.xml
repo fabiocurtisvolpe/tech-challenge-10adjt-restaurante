@@ -86,6 +86,7 @@
             <artifactId>quarkus-rest-jackson</artifactId>
         </dependency>
 
+
         <!-- Resiliência (Circuit Breaker, Retry, Fallback) -->
         <dependency>
             <groupId>io.quarkus</groupId>

@@ -1,4 +1,4 @@
-package com.adjt.core.event;
+package event;
 
 import java.math.BigDecimal;
 

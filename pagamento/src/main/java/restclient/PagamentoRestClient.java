@@ -1,7 +1,6 @@
-package com.adjt.pgto;
+package restclient;
 
-import com.adjt.pgto.dto.RequisicaoPagamentoDTO;
-import jakarta.ws.rs.*;
+import dto.RequisicaoPagamentoDTO;import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.core.Response;

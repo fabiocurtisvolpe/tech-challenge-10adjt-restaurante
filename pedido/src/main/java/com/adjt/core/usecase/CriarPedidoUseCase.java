@@ -29,6 +29,7 @@ public class CriarPedidoUseCase {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         pedido.setValorTotal(total);
+        pedido.setStatusCode(50); // RECEBIDO / AGUARDANDO PAGAMENTO
 
         return pedidoPort.criar(pedido);
     }

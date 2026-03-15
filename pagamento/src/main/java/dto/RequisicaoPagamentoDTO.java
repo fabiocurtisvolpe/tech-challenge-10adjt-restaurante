@@ -1,4 +1,4 @@
-package com.adjt.pgto.dto;
+package dto;
 
 public class RequisicaoPagamentoDTO {
     public Long valor;
