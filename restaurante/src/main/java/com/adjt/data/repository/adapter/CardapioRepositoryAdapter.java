@@ -31,7 +31,7 @@ public class CardapioRepositoryAdapter implements CardapioPort<Cardapio> {
 
         CardapioEntity entity = this.mapper.toEntity(model);
         this.repository.persistAndFlush(entity);
-        return this.mapper.toModel(entity);
+        return this.mapper.toModel(entity, entity.restaurante.id);
     }
 
     @Transactional
@@ -46,7 +46,7 @@ public class CardapioRepositoryAdapter implements CardapioPort<Cardapio> {
         entity.foto = model.getFoto();
         entity.disponivel = model.getDisponivel();
 
-        return mapper.toModel(entity);
+        return mapper.toModel(entity, entity.restaurante.id);
     }
 
     @Transactional
@@ -59,7 +59,7 @@ public class CardapioRepositoryAdapter implements CardapioPort<Cardapio> {
     @Override
     public Cardapio obterPorId(Long id) {
         CardapioEntity entity = this.repository.findById(id);
-        if (entity != null) return mapper.toModel(entity);
+        if (entity != null) return mapper.toModel(entity, entity.restaurante.id);
         return null;
     }
 
@@ -77,7 +77,8 @@ public class CardapioRepositoryAdapter implements CardapioPort<Cardapio> {
         long total = panacheQuery.count();
 
         List<Cardapio> lista = panacheQuery.page(page, size).list()
-                .stream().map(mapper::toModel).toList();
+                .stream()
+                .map(entity -> mapper.toModel(entity, idRestaurante)).toList();
 
         return new CardapioPaginado(lista, total);
     }

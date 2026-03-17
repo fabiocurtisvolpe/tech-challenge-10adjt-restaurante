@@ -2,6 +2,7 @@ package com.adjt.base.core.model;
 
 public enum StatusPagamento {
 
+    PEDIDO_RECEBIDO(50),
     APROVADO(201),
     PENDENTE(202),
     RECUSADO(402),

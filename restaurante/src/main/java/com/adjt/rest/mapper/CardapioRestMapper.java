@@ -16,7 +16,7 @@ public class CardapioRestMapper {
     }
 
     public Cardapio toModel(CardapioRequest request) {
-        return cardapioMapper.toModel(request);
+        return cardapioMapper.toModel(request, request.idRestaurante);
     }
 
     public CardapioResponse toResponse(Cardapio model, Long idRestaurante) {

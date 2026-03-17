@@ -57,7 +57,7 @@ public class RestauranteMapper {
         if (!entity.cardapios.isEmpty()) {
             List<Cardapio> cardapios = entity.cardapios.stream()
                     .filter(Objects::nonNull)
-                    .map(cardapioMapper::toModel)
+                    .map(cardapioEntity -> cardapioMapper.toModel(cardapioEntity, cardapioEntity.restaurante.id))
                     .collect(Collectors.toList());
             restaurante.setCardapios(cardapios);
         }

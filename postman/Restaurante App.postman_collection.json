@@ -146,92 +146,6 @@
             }
           },
           "response": []
-        },
-        {
-          "name": "login",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 200) {\r",
-                  "    var json = pm.response.json();\r",
-                  "    pm.environment.set(\"meu_jwt\", json.access_token);\r",
-                  "    console.log(\"Token capturado e salvo em 'meu_jwt'!\");\r",
-                  "}"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            },
-            {
-              "listen": "prerequest",
-              "script": {
-                "exec": [
-                  ""
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "urlencoded",
-              "urlencoded": [
-                {
-                  "key": "client_id",
-                  "value": "backend-service",
-                  "type": "text",
-                  "uuid": "f054e2ee-6344-4b49-aab2-fe2248b18095"
-                },
-                {
-                  "key": "username",
-                  "value": "joao.silva@email.com",
-                  "type": "text",
-                  "uuid": "9263756a-b000-4be7-840f-c5da6057c9db"
-                },
-                {
-                  "key": "password",
-                  "value": "senha123",
-                  "type": "text",
-                  "uuid": "870ce04a-8ace-40f7-8ef5-fd4d9d61f98c"
-                },
-                {
-                  "key": "grant_type",
-                  "value": "password",
-                  "type": "text",
-                  "uuid": "7ecec3c3-7b09-4009-83e5-2eca5668f789"
-                },
-                {
-                  "key": "client_secret",
-                  "value": "s4lkS22kfayLL/diMrkfQArD99+ZBjUndgjFIirUUFw=",
-                  "type": "text",
-                  "uuid": "f21120cf-5083-4ef3-bba4-0b918ce6c7f3"
-                }
-              ]
-            },
-            "url": {
-              "raw": "http://localhost:8180/realms/restaurante-realm/protocol/openid-connect/token",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "8180",
-              "path": [
-                "realms",
-                "restaurante-realm",
-                "protocol",
-                "openid-connect",
-                "token"
-              ]
-            }
-          },
-          "response": []
         }
       ]
     },
@@ -485,88 +399,35 @@
               "response": []
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "name": "procpag",
+      "item": [
         {
-          "name": "login",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 200) {\r",
-                  "    var json = pm.response.json();\r",
-                  "    pm.environment.set(\"meu_jwt\", json.access_token);\r",
-                  "    console.log(\"Token capturado e salvo em 'meu_jwt'!\");\r",
-                  "}"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            },
-            {
-              "listen": "prerequest",
-              "script": {
-                "exec": [
-                  ""
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
+          "name": "Simular Pagamento",
           "request": {
             "method": "POST",
             "header": [],
             "body": {
-              "mode": "urlencoded",
-              "urlencoded": [
-                {
-                  "key": "client_id",
-                  "value": "backend-service",
-                  "type": "text",
-                  "uuid": "f054e2ee-6344-4b49-aab2-fe2248b18095"
-                },
-                {
-                  "key": "username",
-                  "value": "curtis.fabio@email.com",
-                  "type": "text",
-                  "uuid": "9263756a-b000-4be7-840f-c5da6057c9db"
-                },
-                {
-                  "key": "password",
-                  "value": "senha123",
-                  "type": "text",
-                  "uuid": "870ce04a-8ace-40f7-8ef5-fd4d9d61f98c"
-                },
-                {
-                  "key": "grant_type",
-                  "value": "password",
-                  "type": "text",
-                  "uuid": "7ecec3c3-7b09-4009-83e5-2eca5668f789"
-                },
-                {
-                  "key": "client_secret",
-                  "value": "s4lkS22kfayLL/diMrkfQArD99+ZBjUndgjFIirUUFw=",
-                  "type": "text",
-                  "uuid": "f21120cf-5083-4ef3-bba4-0b918ce6c7f3"
+              "mode": "raw",
+              "raw": "{\r\n    \"valor\": 100,\r\n    \"pagamento_id\": \"PED-001\",\r\n    \"cliente_id\": \"CLI-001\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
                 }
-              ]
+              }
             },
             "url": {
-              "raw": "http://localhost:8180/realms/restaurante-realm/protocol/openid-connect/token",
+              "raw": "http://localhost:8089/requisicao",
               "protocol": "http",
               "host": [
                 "localhost"
               ],
-              "port": "8180",
+              "port": "8089",
               "path": [
-                "realms",
-                "restaurante-realm",
-                "protocol",
-                "openid-connect",
-                "token"
+                "requisicao"
               ]
             }
           },
@@ -618,92 +479,324 @@
           "response": []
         },
         {
-          "name": "login",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 200) {\r",
-                  "    var json = pm.response.json();\r",
-                  "    pm.environment.set(\"meu_jwt\", json.access_token);\r",
-                  "    console.log(\"Token capturado e salvo em 'meu_jwt'!\");\r",
-                  "}"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            },
-            {
-              "listen": "prerequest",
-              "script": {
-                "exec": [
-                  ""
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
+          "name": "listarRestaurantes",
           "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "urlencoded",
-              "urlencoded": [
+            "auth": {
+              "type": "bearer",
+              "bearer": [
                 {
-                  "key": "client_id",
-                  "value": "backend-service",
-                  "type": "text",
-                  "uuid": "f054e2ee-6344-4b49-aab2-fe2248b18095"
-                },
-                {
-                  "key": "username",
-                  "value": "joao.silva@email.com",
-                  "type": "text",
-                  "uuid": "9263756a-b000-4be7-840f-c5da6057c9db"
-                },
-                {
-                  "key": "password",
-                  "value": "senha123",
-                  "type": "text",
-                  "uuid": "870ce04a-8ace-40f7-8ef5-fd4d9d61f98c"
-                },
-                {
-                  "key": "grant_type",
-                  "value": "password",
-                  "type": "text",
-                  "uuid": "7ecec3c3-7b09-4009-83e5-2eca5668f789"
-                },
-                {
-                  "key": "client_secret",
-                  "value": "s4lkS22kfayLL/diMrkfQArD99+ZBjUndgjFIirUUFw=",
-                  "type": "text",
-                  "uuid": "f21120cf-5083-4ef3-bba4-0b918ce6c7f3"
+                  "key": "token",
+                  "value": "{{meu_jwt}}",
+                  "type": "string"
                 }
               ]
             },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query {\r\n  listarRestaurantes(page: 0,\r\n    size: 10,\r\n    idTipoCozinha: 3) {\r\n    id\r\n    nome\r\n    descricao\r\n  }\r\n}",
+                "variables": ""
+              }
+            },
             "url": {
-              "raw": "http://localhost:8180/realms/restaurante-realm/protocol/openid-connect/token",
-              "protocol": "http",
+              "raw": "{{URL_API_PEDIDO}}/graphql",
               "host": [
-                "localhost"
+                "{{URL_API_PEDIDO}}"
               ],
-              "port": "8180",
               "path": [
-                "realms",
-                "restaurante-realm",
-                "protocol",
-                "openid-connect",
-                "token"
+                "graphql"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "listarItensCardapio",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{meu_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query {\r\n  listarItensCardapio(page: 0,\r\n    size: 10,\r\n    idRestaurante: 1,\r\n    disponivel: true) {\r\n    id\r\n    nome\r\n    descricao\r\n  }\r\n}",
+                "variables": ""
+              }
+            },
+            "url": {
+              "raw": "{{URL_API_PEDIDO}}/graphql",
+              "host": [
+                "{{URL_API_PEDIDO}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "fazerPedido",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{meu_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"idCliente\": 1,\r\n  \"idRestaurante\": 1,\r\n  \"itens\": [\r\n    {\r\n      \"idCardapio\": 1,\r\n      \"qtd\": 2,\r\n      \"valor\": 25.50\r\n    },\r\n    {\r\n      \"idCardapio\": 1,\r\n      \"qtd\": 1,\r\n      \"valor\": 15.0\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL_API_PEDIDO}}/pedido/criar",
+              "host": [
+                "{{URL_API_PEDIDO}}"
+              ],
+              "path": [
+                "pedido",
+                "criar"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "obterPedido",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{meu_jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL_API_PEDIDO}}/pedido/obter/10",
+              "host": [
+                "{{URL_API_PEDIDO}}"
+              ],
+              "path": [
+                "pedido",
+                "obter",
+                "10"
               ]
             }
           },
           "response": []
         }
       ]
+    },
+    {
+      "name": "login_cliente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 200) {\r",
+              "    var json = pm.response.json();\r",
+              "    pm.environment.set(\"meu_jwt\", json.access_token);\r",
+              "    console.log(\"Token capturado e salvo em 'meu_jwt'!\");\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "client_id",
+              "value": "backend-service",
+              "type": "text",
+              "uuid": "f054e2ee-6344-4b49-aab2-fe2248b18095"
+            },
+            {
+              "key": "username",
+              "value": "joao.silva@email.com",
+              "type": "text",
+              "uuid": "9263756a-b000-4be7-840f-c5da6057c9db"
+            },
+            {
+              "key": "password",
+              "value": "senha123",
+              "type": "text",
+              "uuid": "870ce04a-8ace-40f7-8ef5-fd4d9d61f98c"
+            },
+            {
+              "key": "grant_type",
+              "value": "password",
+              "type": "text",
+              "uuid": "7ecec3c3-7b09-4009-83e5-2eca5668f789"
+            },
+            {
+              "key": "client_secret",
+              "value": "s4lkS22kfayLL/diMrkfQArD99+ZBjUndgjFIirUUFw=",
+              "type": "text",
+              "uuid": "f21120cf-5083-4ef3-bba4-0b918ce6c7f3"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8180/realms/restaurante-realm/protocol/openid-connect/token",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8180",
+          "path": [
+            "realms",
+            "restaurante-realm",
+            "protocol",
+            "openid-connect",
+            "token"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "login_dono",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 200) {\r",
+              "    var json = pm.response.json();\r",
+              "    pm.environment.set(\"meu_jwt\", json.access_token);\r",
+              "    console.log(\"Token capturado e salvo em 'meu_jwt'!\");\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "client_id",
+              "value": "backend-service",
+              "type": "text",
+              "uuid": "f054e2ee-6344-4b49-aab2-fe2248b18095"
+            },
+            {
+              "key": "username",
+              "value": "curtis.fabio@email.com",
+              "type": "text",
+              "uuid": "9263756a-b000-4be7-840f-c5da6057c9db"
+            },
+            {
+              "key": "password",
+              "value": "senha123",
+              "type": "text",
+              "uuid": "870ce04a-8ace-40f7-8ef5-fd4d9d61f98c"
+            },
+            {
+              "key": "grant_type",
+              "value": "password",
+              "type": "text",
+              "uuid": "7ecec3c3-7b09-4009-83e5-2eca5668f789"
+            },
+            {
+              "key": "client_secret",
+              "value": "s4lkS22kfayLL/diMrkfQArD99+ZBjUndgjFIirUUFw=",
+              "type": "text",
+              "uuid": "f21120cf-5083-4ef3-bba4-0b918ce6c7f3"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8180/realms/restaurante-realm/protocol/openid-connect/token",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8180",
+          "path": [
+            "realms",
+            "restaurante-realm",
+            "protocol",
+            "openid-connect",
+            "token"
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }
