@@ -7,15 +7,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="pedido" />
         <module name="cliente" />
-        <module name="pagamento" />
         <module name="restaurante" />
+        <module name="pedido" />
+        <module name="pagamento" />
+        <module name="base" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="cliente (1)" target="25" />
       <module name="entrega" target="25" />
+      <module name="pagamento (1)" target="21" />
       <module name="pedido (1)" target="25" />
       <module name="restaurante (1)" target="25" />
     </bytecodeTargetLevel>
@@ -26,6 +28,7 @@
       <module name="cliente (1)" options="-parameters" />
       <module name="entrega" options="-parameters" />
       <module name="pagamento" options="-parameters" />
+      <module name="pagamento (1)" options="-parameters" />
       <module name="pedido" options="-parameters" />
       <module name="pedido (1)" options="-parameters" />
       <module name="restaurante" options="-parameters" />

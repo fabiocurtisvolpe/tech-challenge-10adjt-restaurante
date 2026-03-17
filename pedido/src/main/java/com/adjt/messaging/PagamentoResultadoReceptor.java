@@ -1,7 +1,7 @@
 package com.adjt.messaging;
 
 import com.adjt.core.usecase.AtualizarPedidoUseCase;
-import com.adjt.rest.event.PagamentoResultadoEvent;
+import com.adjt.base.infra.event.PagamentoResultadoEvent;
 import io.vertx.core.json.JsonObject;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

@@ -1,7 +1,7 @@
 package com.adjt.gprc;
 
 import com.adjt.cliente.*;
-import com.adjt.core.exception.NotificacaoException;
+import com.adjt.base.core.exception.NotificacaoException;
 import com.adjt.core.usecase.cliente.ObterPorIdClienteUseCase;
 import com.adjt.core.util.MensagemUtil;
 import com.adjt.data.entity.ClienteEntity;

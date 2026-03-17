@@ -1,6 +1,6 @@
 package com.adjt.gprc;
 
-import com.adjt.core.exception.NotificacaoException;
+import com.adjt.base.core.exception.NotificacaoException;
 import com.adjt.data.repository.adapter.CardapioRepositoryAdapter;
 import com.adjt.data.repository.adapter.RestauranteRepositoryAdapter;
 import com.adjt.gprc.mapper.RestauranteGrpcMapper;

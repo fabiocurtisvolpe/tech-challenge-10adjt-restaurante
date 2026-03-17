@@ -1,5 +1,6 @@
 package com.adjt.rest.controller;
 
+import com.adjt.base.rest.interceptor.UserContext;
 import com.adjt.core.model.Pedido;
 import com.adjt.core.usecase.CancelarPedidoUseCase;
 import com.adjt.core.usecase.CriarPedidoUseCase;
@@ -7,8 +8,7 @@ import com.adjt.core.usecase.ObterPedidoUseCase;
 import com.adjt.gprc.ClienteGrpcUseCase;
 import com.adjt.rest.dto.request.PedidoRequest;
 import com.adjt.rest.dto.response.PedidoResponse;
-import com.adjt.rest.event.PedidoCriadoEvent;
-import com.adjt.rest.interceptor.UserContext;
+import com.adjt.base.infra.event.PedidoCriadoEvent;
 import com.adjt.rest.mapper.PedidoRestMapper;
 import io.quarkus.logging.Log;
 import io.smallrye.common.annotation.Blocking;

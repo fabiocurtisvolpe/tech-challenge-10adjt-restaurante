@@ -1,6 +1,6 @@
 package com.adjt.pagamento.infra.gateway.service;
 
-import com.adjt.pagamento.core.model.StatusPagamento;
+import com.adjt.base.core.model.StatusPagamento;
 import com.adjt.pagamento.infra.gateway.client.PagamentoRestClient;
 import com.adjt.pagamento.infra.gateway.dto.RequisicaoPagamentoDTO;
 import io.smallrye.mutiny.Uni;

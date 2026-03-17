@@ -1,6 +1,6 @@
 package com.adjt.data.repository.adapter;
 
-import com.adjt.core.exception.NotificacaoException;
+import com.adjt.base.core.exception.NotificacaoException;
 import com.adjt.core.model.Cliente;
 import com.adjt.core.model.Endereco;
 import com.adjt.core.port.ClientePort;
@@ -10,7 +10,7 @@ import com.adjt.data.entity.EnderecoEntity;
 import com.adjt.data.mapper.ClienteMapper;
 import com.adjt.data.mapper.EnderecoMapper;
 import com.adjt.data.repository.jpa.ClienteRepository;
-import com.adjt.rest.interceptor.UserContext;
+import com.adjt.base.rest.interceptor.UserContext;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 

@@ -1,6 +1,6 @@
 package com.adjt.core.validator;
 
-import com.adjt.core.exception.NotificacaoException;
+import com.adjt.base.core.exception.NotificacaoException;
 import com.adjt.core.model.Usuario;
 import com.adjt.core.util.MensagemUtil;
 

@@ -1,0 +1,9 @@
+com\adjt\base\core\model\StatusPagamento.class
+com\adjt\base\rest\exception\GlobalExceptionHandler.class
+com\adjt\base\rest\interceptor\UserInterceptor.class
+com\adjt\base\infra\event\PedidoCriadoEvent.class
+com\adjt\base\infra\event\PagamentoResultadoEvent.class
+com\adjt\base\core\exception\NotificacaoException.class
+com\adjt\base\gprc\interceptor\GrpcUserInterceptor.class
+com\adjt\base\rest\interceptor\UserContext.class
+com\adjt\base\rest\exception\GlobalExceptionHandler$ErrorResponse.class

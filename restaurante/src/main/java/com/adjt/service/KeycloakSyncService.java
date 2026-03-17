@@ -1,6 +1,6 @@
 package com.adjt.service;
 
-import com.adjt.core.exception.NotificacaoException;
+import com.adjt.base.core.exception.NotificacaoException;
 import com.adjt.core.model.Usuario;
 import com.adjt.data.repository.jpa.PerfilRepository;
 import io.quarkus.runtime.StartupEvent;

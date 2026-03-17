@@ -1,8 +1,8 @@
 package com.adjt.rest.mapper;
 
+import com.adjt.base.core.model.StatusPagamento;
 import com.adjt.core.model.ItemPedido;
 import com.adjt.core.model.Pedido;
-import com.adjt.core.model.StatusPagamento;
 import com.adjt.rest.dto.request.ItemPedidoRequest;
 import com.adjt.rest.dto.request.PedidoRequest;
 import com.adjt.rest.dto.response.PedidoResponse;
